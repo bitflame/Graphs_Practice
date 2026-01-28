@@ -1,5 +1,4 @@
-import org.example.Main;
-
+package org.example;
 import java.util.*;
 
 public class MergeIntervals {
