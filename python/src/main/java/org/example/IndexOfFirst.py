@@ -11,14 +11,14 @@ class IndexOfFirst:
         while i <= N - M:
             skip = 0
             for j in range(M - 1, -1, -1):
-                if i + j < N and needle[j] != haystack[i + j]:
+                if needle[j] != haystack[i + j]:
                     skip = j - right[ord(haystack[i + j])]
                     if skip < 1: skip = 1
                     break
                 elif i + j > N:
                     return -1
-            if i+j < N and skip == 0: return i
-            i += max(skip,1)
+            if skip == 0: return i
+            i += skip
         return -1
 
 
