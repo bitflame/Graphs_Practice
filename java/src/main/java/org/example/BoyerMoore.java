@@ -14,16 +14,16 @@ public class BoyerMoore {
             right[needle.charAt(j)] = j;
         }
         int skip;
-        for (int i = 0; i <=N-M ; i++) {
-            skip=0;
-            for (int j = M-1; j >=0 ; j--) {
-                if (needle.charAt(j)!= haystack.charAt(i+j)){
-                    skip = j - right[haystack.charAt(i+j)];
-                    if (skip<1) skip = 1;
+        for (int i = 0; i <= N - M; i++) {
+            skip = 0;
+            for (int j = M - 1; j >= 0; j--) {
+                if (needle.charAt(j) != haystack.charAt(i + j)) {
+                    skip = j - right[haystack.charAt(i + j)];
+                    if (skip < 1) skip = 1;
                     break;
                 }
             }
-            if (skip==0) return i;
+            if (skip == 0) return i;
         }
         return -1;
     }
@@ -44,5 +44,8 @@ public class BoyerMoore {
         hay = "aaa";
         ndl = "aaaa";
         System.out.printf("Test 5 - expected output: -1, actual: %d\n", bm.indexOf(hay, ndl));
+        hay = "mississippi";
+        ndl = "a";
+        System.out.printf("Test 6 - expected output: -1, actual: %d\n", bm.indexOf(hay, ndl));
     }
 }
