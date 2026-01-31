@@ -5,23 +5,24 @@ class RabinKarp:
         RM = 1
         M = len(needle)
         N = len(haystack)
+        if M > N: return -1
         R = 256
-        for i in range(1, M - 1):
+        for _ in range(M-1):
             RM = R * RM % Q
-        patHash = self.hash(needle, Q)
-        txtHash = self.hash(haystack, Q)
+        patHash = self.hash(needle, Q, M)
+        txtHash = self.hash(haystack[:M], Q, M)
         if patHash == txtHash: return 0
         for i in range(M, N, 1):
-            txtHash = (txtHash + Q - RM * ord(haystack[i - M]) % Q) % Q
+            txtHash = (txtHash + Q - RM * ord(haystack[i-M]) % Q) % Q
             txtHash = (txtHash * R + ord(haystack[i])) % Q
             if patHash == txtHash: return i - M + 1
         return -1
 
-    def hash(self, needle: str, Q: int) -> int:
+    def hash(self, needle: str, Q: int, end:int) -> int:
         h = 0
         R = 256
-        for j, c in enumerate(needle):
-            h = (R * h + ord(c)) % Q
+        for i in range(end):
+            h = (R * h + ord(needle[i]))%Q
         return h
 
 
@@ -34,7 +35,7 @@ needle = "NEEDLE"
 print(f'Test 2 - expected output: 15, actual: {rk.strStr(haystack, needle)}')
 haystack = "sadbustedsad"
 needle = "sad"
-print(f'Test 2 - expected output: 0, actual: {rk.strStr(haystack, needle)}')
+print(f'Test 3 - expected output: 0, actual: {rk.strStr(haystack, needle)}')
 haystack = "leetcode"
 needle = "leeto"
 print(f'Test 4 - expected output: -1, actual: {rk.strStr(haystack, needle)}')
