@@ -13,34 +13,43 @@ public class TextJustif {
             separator = " ";
             wordsPerLine = 0;
             sb = new StringBuilder();
-            while (end + words[currWord].length() <= maxWidth) {
+            int remainder = 0;
+            while (currWord < words.length && end + words[currWord].length() <= maxWidth) {
                 end += words[currWord++].length() + 1;
                 wordsPerLine++;
             }
             int additionalSpaces = maxWidth - (end - 1);
             if (currWord != words.length) {
-                int remainder = additionalSpaces % wordsPerLine;
-                for (int i = 0; i <= additionalSpaces / (wordsPerLine - 1); i++) {
-                    sb.append(separator);
+                if (wordsPerLine > 1) remainder = additionalSpaces % (wordsPerLine - 1);
+                if (additionalSpaces >= (wordsPerLine-1) && wordsPerLine > 1) {
+                    for (int i = 0; i <= additionalSpaces / (wordsPerLine - 1); i++) {
+                        sb.append(separator);
+                    }
+                    separator = sb.toString();
+                    sb = new StringBuilder();
                 }
-                separator = sb.toString();
-                sb = new StringBuilder();
-                int i = 0;
-                for (; i < wordsPerLine - 1; i++) {
+                int i = currWord - wordsPerLine;
+                for (; i < currWord - 1; i++) {
                     sb.append(words[i]).append(separator);
                     if (remainder > 0) {
                         sb.append(" ");
                         remainder--;
                     }
                 }
-                sb.append(words[i]);
+                sb.append(words[currWord - 1]);
+                if (wordsPerLine == 1) {
+                    while (sb.length() != maxWidth) {
+                        sb.append(" ");
+                    }
+                }
             } else {
                 // if we are at last line...
                 separator = " ";
-                for (int i = 0; i < wordsPerLine; i++) {
+                int i = currWord - wordsPerLine;
+                for (; i < currWord; i++) {
                     sb.append(words[i]).append(separator);
                 }
-                while (sb.length() < maxWidth) sb.append(separator);
+                while (sb.length() != maxWidth) sb.append(" ");
             }
             // how to deal with the last line?
             result.add(sb.toString());
@@ -54,7 +63,16 @@ public class TextJustif {
         String[] words = {"This", "is", "an", "example", "of", "text", "justification"};
         int maxWidth = 16;
         for (String s : tj.fullJustify(words, 16)) {
-            System.out.printf("%s\n", s);
+            System.out.printf("\"%s\"\n", s);
+        }
+        words = new String[]{"What", "must", "be", "acknowledgment", "shall", "be"};
+        for (String s : tj.fullJustify(words, 16)) {
+            System.out.printf("\"%s\"\n", s);
+        }
+        words = new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to",
+                "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"};
+        for (String s : tj.fullJustify(words, 20)) {
+            System.out.printf("\"%s\"\n", s);
         }
     }
 }
