@@ -66,7 +66,7 @@ public class TextJustif {
         int totalChars = 0, currWordIndex = 0, wordsPerLine = 0, index = 0;
         String separator = " ";
         while (currWordIndex < words.length) {
-            if (totalChars + words[currWordIndex].length() > maxWidth) {
+            if (totalChars == maxWidth || totalChars + words[currWordIndex].length()+1 > maxWidth) {
                 for (int i = 0; i < (maxWidth - totalChars); i++) {
                     index = i % Math.max(line.size() - 1, 1);
                     sb.append(line.remove(index));
@@ -74,7 +74,7 @@ public class TextJustif {
                     line.add(index, sb.toString());
                     sb = new StringBuilder();
                 }
-                for(String s: line) {
+                for (String s : line) {
                     sb.append(s);
                 }
                 result.add(sb.toString());
@@ -83,21 +83,23 @@ public class TextJustif {
                 totalChars = 0;
             }
             sb.append(words[currWordIndex]);
-            totalChars += words[currWordIndex].length();
-
-            if (currWordIndex+1<words.length && totalChars + 1 +
-                    words[currWordIndex + 1].length() <= maxWidth) {
+            totalChars += words[currWordIndex++].length();
+            if (currWordIndex == words.length) {
+                line.add(sb.toString());
+                break;
+            }
+            if (totalChars + 1 + words[currWordIndex].length() <= maxWidth) {
                 sb.append(separator);
-                totalChars ++;
+                totalChars++;
             }
             line.add(sb.toString());
             sb = new StringBuilder();
-            currWordIndex++;
         }
-        for(String s: line) {
-            sb.append(s);
+        for (String s : line) {
+            sb.append(s).append(separator);
         }
         // sb.append(line.getLast());
+        totalChars = sb.length();
         sb.append(separator.repeat(Math.max(0, maxWidth - totalChars)));
         result.add(sb.toString());
         return result;
@@ -105,7 +107,12 @@ public class TextJustif {
 
     public static void main(String[] args) {
         TextJustif tj = new TextJustif();
-        String[] words = {"This", "is", "an", "example", "of", "text", "justification"};
+        String[] words = new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to",
+                "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"};
+        for (String s : tj.methodTwo(words, 20)) {
+            System.out.printf("\"%s\"\n", s);
+        }
+        words = new String[]{"This", "is", "an", "example", "of", "text", "justification"};
         int maxWidth = 16;
         for (String s : tj.methodTwo(words, 16)) {
             System.out.printf("\"%s\"\n", s);
@@ -114,10 +121,6 @@ public class TextJustif {
         for (String s : tj.methodTwo(words, 16)) {
             System.out.printf("\"%s\"\n", s);
         }
-        words = new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to",
-                "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"};
-        for (String s : tj.methodTwo(words, 20)) {
-            System.out.printf("\"%s\"\n", s);
-        }
+
     }
 }
