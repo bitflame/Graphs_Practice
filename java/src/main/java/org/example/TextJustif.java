@@ -78,21 +78,21 @@ public class TextJustif {
                 line = new ArrayList<>();
                 totalChars = 0;
             }
-            if (currWordIndex == words.length - 1) {
-                sb.append(line.getLast());
-                for (int i = 0; i < maxWidth - totalChars; i++) {
-                    sb.append(separator);
-                }
-                result.add(sb.toString());
-            }
             sb.append(words[currWordIndex]);
-            if (totalChars + words[currWordIndex].length() + 1 + words[currWordIndex + 1].length() < maxWidth)
+            if (currWordIndex < words.length - 1 && totalChars + words[currWordIndex].length() + 1 +
+                    words[currWordIndex + 1].length() < maxWidth) {
                 sb.append(separator);
+                totalChars += words[currWordIndex].length() + 1;
+            } else {
+                totalChars += words[currWordIndex].length();
+            }
             line.add(sb.toString());
             sb = new StringBuilder();
-            totalChars += words[currWordIndex].length() + 1;
             currWordIndex++;
         }
+        sb.append(line.getLast());
+        sb.append(separator.repeat(Math.max(0, maxWidth - totalChars)));
+        result.add(sb.toString());
         return result;
     }
 
