@@ -74,23 +74,30 @@ public class TextJustif {
                     line.add(index, sb.toString());
                     sb = new StringBuilder();
                 }
-                result.addAll(line);
+                for(String s: line) {
+                    sb.append(s);
+                }
+                result.add(sb.toString());
+                sb = new StringBuilder();
                 line = new ArrayList<>();
                 totalChars = 0;
             }
             sb.append(words[currWordIndex]);
-            if (currWordIndex < words.length - 1 && totalChars + words[currWordIndex].length() + 1 +
-                    words[currWordIndex + 1].length() < maxWidth) {
+            totalChars += words[currWordIndex].length();
+
+            if (currWordIndex+1<words.length && totalChars + 1 +
+                    words[currWordIndex + 1].length() <= maxWidth) {
                 sb.append(separator);
-                totalChars += words[currWordIndex].length() + 1;
-            } else {
-                totalChars += words[currWordIndex].length();
+                totalChars ++;
             }
             line.add(sb.toString());
             sb = new StringBuilder();
             currWordIndex++;
         }
-        sb.append(line.getLast());
+        for(String s: line) {
+            sb.append(s);
+        }
+        // sb.append(line.getLast());
         sb.append(separator.repeat(Math.max(0, maxWidth - totalChars)));
         result.add(sb.toString());
         return result;
