@@ -68,7 +68,7 @@ public class TextJustif {
         String currentWord = "";
         while (currWordIndex < words.length) {
             currentWord = words[currWordIndex];
-            if (totalChars + line.size() - 2 + currentWord.length() >= maxWidth) {
+            if (totalChars + line.size() - 1 + currentWord.length() >= maxWidth) {
                 for (int i = 0; totalChars < maxWidth; i++) {
                     sb.append(line.remove(i % (line.size() - 1)));
                     sb.append(separator);
