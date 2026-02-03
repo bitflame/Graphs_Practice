@@ -63,43 +63,40 @@ public class TextJustif {
         StringBuilder sb = new StringBuilder();
         List<String> line = new ArrayList<>();
         List<String> result = new ArrayList<>();
-        int totalChars = 0, currWordIndex = 0, wordsPerLine = 0, index = 0;
+        int totalChars = 0, currWordIndex = 0, gapIndex = 0;
         String separator = " ";
+        String currentWord = "";
         while (currWordIndex < words.length) {
-            if (totalChars + words[currWordIndex].length() > maxWidth) {
-                for (int i = 0; i < (maxWidth - totalChars); i++) {
-                    index = i % Math.max(line.size() - 1, 1);
-                    sb.append(line.remove(index));
+            currentWord = words[currWordIndex];
+            if (totalChars + line.size() - 2 + currentWord.length() >= maxWidth) {
+                for (int i = 0; totalChars < maxWidth; i++) {
+                    sb.append(line.remove(i % (line.size() - 1)));
                     sb.append(separator);
-                    line.add(index, sb.toString());
+                    line.add(i%(line.size()), sb.toString());
                     sb = new StringBuilder();
+                    totalChars++;
                 }
-                for (String s : line) {
-                    sb.append(s);
+                for(String str: line) {
+                    sb.append(str);
                 }
-                // System.out.println("current string: " + sb.toString());
+
                 result.add(sb.toString());
                 sb = new StringBuilder();
                 line = new ArrayList<>();
                 totalChars = 0;
             }
-            sb.append(words[currWordIndex]);
-            totalChars += words[currWordIndex].length();
-            if (currWordIndex == words.length - 1) {
-                line.add(sb.toString());
+            line.add(currentWord);
+            if (currWordIndex == words.length) {
                 break;
             }
-            if (totalChars + 1  < maxWidth) {
-                sb.append(separator);
-                totalChars++;
-            }
+            totalChars += currentWord.length();
             currWordIndex++;
-            line.add(sb.toString());
-            sb = new StringBuilder();
         }
-        // sb.append(line.getLast());
+        for (String seg : line) {
+            sb.append(seg).append(separator);
+        }
         totalChars = sb.length();
-        sb.append(separator.repeat(Math.max(0, maxWidth - totalChars)));
+        sb.append(separator.repeat(Math.max(0, maxWidth - (totalChars))));
         result.add(sb.toString());
         return result;
     }
