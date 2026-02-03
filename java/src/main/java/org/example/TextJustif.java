@@ -66,7 +66,7 @@ public class TextJustif {
         int totalChars = 0, currWordIndex = 0, wordsPerLine = 0, index = 0;
         String separator = " ";
         while (currWordIndex < words.length) {
-            if (totalChars == maxWidth || totalChars + words[currWordIndex].length()+1 > maxWidth) {
+            if (totalChars+1 + words[currWordIndex].length() > maxWidth) {
                 for (int i = 0; i < (maxWidth - totalChars); i++) {
                     index = i % Math.max(line.size() - 1, 1);
                     sb.append(line.remove(index));
@@ -83,20 +83,18 @@ public class TextJustif {
                 totalChars = 0;
             }
             sb.append(words[currWordIndex]);
-            totalChars += words[currWordIndex++].length();
-            if (currWordIndex == words.length) {
+            totalChars += words[currWordIndex].length();
+            if (currWordIndex == words.length - 1) {
                 line.add(sb.toString());
                 break;
             }
-            if (totalChars + 1 + words[currWordIndex].length() <= maxWidth) {
+            if (totalChars + 1 + words[currWordIndex+1].length() <= maxWidth) {
                 sb.append(separator);
                 totalChars++;
             }
+            currWordIndex++;
             line.add(sb.toString());
             sb = new StringBuilder();
-        }
-        for (String s : line) {
-            sb.append(s).append(separator);
         }
         // sb.append(line.getLast());
         totalChars = sb.length();
@@ -107,8 +105,9 @@ public class TextJustif {
 
     public static void main(String[] args) {
         TextJustif tj = new TextJustif();
-        String[] words = new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to",
-                "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"};
+        String[] words = new String[]{"Science", "is", "what", "we", "understand", "well",
+                "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything",
+                "else", "we", "do"};
         for (String s : tj.methodTwo(words, 20)) {
             System.out.printf("\"%s\"\n", s);
         }
