@@ -66,7 +66,7 @@ public class TextJustif {
         int totalChars = 0, currWordIndex = 0, wordsPerLine = 0, index = 0;
         String separator = " ";
         while (currWordIndex < words.length) {
-            if (totalChars+1 + words[currWordIndex].length() > maxWidth) {
+            if (totalChars + words[currWordIndex].length() > maxWidth) {
                 for (int i = 0; i < (maxWidth - totalChars); i++) {
                     index = i % Math.max(line.size() - 1, 1);
                     sb.append(line.remove(index));
@@ -77,6 +77,7 @@ public class TextJustif {
                 for (String s : line) {
                     sb.append(s);
                 }
+                // System.out.println("current string: " + sb.toString());
                 result.add(sb.toString());
                 sb = new StringBuilder();
                 line = new ArrayList<>();
@@ -88,7 +89,7 @@ public class TextJustif {
                 line.add(sb.toString());
                 break;
             }
-            if (totalChars + 1 + words[currWordIndex+1].length() <= maxWidth) {
+            if (totalChars + 1  < maxWidth) {
                 sb.append(separator);
                 totalChars++;
             }
