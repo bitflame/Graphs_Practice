@@ -69,7 +69,7 @@ public class TextJustif {
         while (currWordIndex < words.length) {
             currentWord = words[currWordIndex];
             if (totalChars + line.size() - 1 + currentWord.length() >= maxWidth) {
-                if (line.size()==1) {
+                if (line.size() == 1) {
                     sb.append(line.removeFirst());
                     sb.append(separator.repeat(Math.max(0, maxWidth - (totalChars))));
                     line.add(sb.toString());
@@ -78,12 +78,12 @@ public class TextJustif {
                     for (int i = 0; totalChars < maxWidth; i++) {
                         sb.append(line.remove(i % (line.size() - 1)));
                         sb.append(separator);
-                        line.add(i%(line.size()), sb.toString());
+                        line.add(i % (line.size()), sb.toString());
                         sb = new StringBuilder();
                         totalChars++;
                     }
                 }
-                for(String str: line) {
+                for (String str : line) {
                     sb.append(str);
                 }
                 result.add(sb.toString());
@@ -98,8 +98,16 @@ public class TextJustif {
             totalChars += currentWord.length();
             currWordIndex++;
         }
-        for (String seg : line) {
-            sb.append(seg).append(separator);
+        if (line.size() == 1) {
+            for (int i = 0; i < line.size(); i++) {
+                sb.append(line.get(i)).append(separator);
+            }
+        } else {
+            int i = 0;
+            for (; i < line.size()-1; i++) {
+                sb.append(line.get(i)).append(separator);
+            }
+            sb.append(line.get(i));
         }
         totalChars = sb.length();
         sb.append(separator.repeat(Math.max(0, maxWidth - (totalChars))));
@@ -109,21 +117,32 @@ public class TextJustif {
 
     public static void main(String[] args) {
         TextJustif tj = new TextJustif();
+        List<String> test = new ArrayList<>();
+        test.add("Test");
+        System.out.printf("List size is: %d when there is 1 segment in the list.\n" , test.size());
         String[] words = new String[]{"Science", "is", "what", "we", "understand", "well",
                 "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything",
                 "else", "we", "do"};
+        System.out.println("Test 1 result: ");
         for (String s : tj.methodTwo(words, 20)) {
             System.out.printf("\"%s\"\n", s);
         }
+        System.out.println("Test 2 result: ");
         words = new String[]{"This", "is", "an", "example", "of", "text", "justification"};
         int maxWidth = 16;
         for (String s : tj.methodTwo(words, 16)) {
             System.out.printf("\"%s\"\n", s);
         }
+        System.out.println("Test 3 result: ");
         words = new String[]{"What", "must", "be", "acknowledgment", "shall", "be"};
         for (String s : tj.methodTwo(words, 16)) {
             System.out.printf("\"%s\"\n", s);
         }
-
+        words = new String[]{"ask", "not", "what", "your", "country", "can", "do", "for", "you", "ask",
+                "what", "you", "can", "do", "for", "your", "country"};
+        System.out.println("Test 4 result: ");
+        for (String s : tj.methodTwo(words, 16)) {
+            System.out.printf("\"%s\"\n", s);
+        }
     }
 }
