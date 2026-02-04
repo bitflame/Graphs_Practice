@@ -32,22 +32,20 @@ public class TextJustif {
         int even = spaces / gaps;
         int extra = spaces % gaps;
         StringBuilder sb = new StringBuilder();
+        // this loop just adds one space after each character
         for (int i = 0; i < line.size(); i++) {
-            // It looks like you do not have to remove the string from the list to update it - Good to know
-            // todo - watch it do this in debug
             sb.append(line.get(i));
-            if (i<gaps){
-                int count = even + (extra-- > 0? 1:0);
+            if (i < gaps) {
+                int count = even + (extra-- > 0 ? 1 : 0);
                 sb.append(" ".repeat(count));
             }
         }
         return sb.toString();
     }
 
-    private String leftJustify(List<String>line, int maxWidth) {
+    private String leftJustify(List<String> line, int maxWidth) {
         StringBuilder sb = new StringBuilder();
-
-        while(sb.length()<maxWidth) sb.append(" ");
+        while (sb.length() < maxWidth) sb.append(" ");
         return sb.toString();
     }
 
@@ -111,7 +109,10 @@ public class TextJustif {
     public static void main(String[] args) {
         TextJustif tj = new TextJustif();
         List<String> test = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         test.add("Test");
+        sb.append(test.getFirst());
+        sb.append(" ");
         System.out.printf("List size is: %d when there is 1 segment in the list.\n", test.size());
         String[] words = new String[]{"Science", "is", "what", "we", "understand", "well",
                 "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything",
