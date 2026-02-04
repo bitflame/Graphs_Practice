@@ -99,12 +99,10 @@ public class TextJustif {
             currWordIndex++;
         }
         if (line.size() == 1) {
-            for (int i = 0; i < line.size(); i++) {
-                sb.append(line.get(i)).append(separator);
-            }
+            sb.append(line.getFirst());
         } else {
             int i = 0;
-            for (; i < line.size()-1; i++) {
+            for (; i < line.size() - 1; i++) {
                 sb.append(line.get(i)).append(separator);
             }
             sb.append(line.get(i));
@@ -119,7 +117,7 @@ public class TextJustif {
         TextJustif tj = new TextJustif();
         List<String> test = new ArrayList<>();
         test.add("Test");
-        System.out.printf("List size is: %d when there is 1 segment in the list.\n" , test.size());
+        System.out.printf("List size is: %d when there is 1 segment in the list.\n", test.size());
         String[] words = new String[]{"Science", "is", "what", "we", "understand", "well",
                 "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything",
                 "else", "we", "do"};
@@ -142,6 +140,11 @@ public class TextJustif {
                 "what", "you", "can", "do", "for", "your", "country"};
         System.out.println("Test 4 result: ");
         for (String s : tj.methodTwo(words, 16)) {
+            System.out.printf("\"%s\"\n", s);
+        }
+        words = new String[]{"a"};
+        System.out.println("Test 5 result: ");
+        for (String s : tj.methodTwo(words, 1)) {
             System.out.printf("\"%s\"\n", s);
         }
     }
