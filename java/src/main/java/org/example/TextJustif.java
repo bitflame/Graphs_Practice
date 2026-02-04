@@ -45,6 +45,10 @@ public class TextJustif {
 
     private String leftJustify(List<String> line, int maxWidth) {
         StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < line.size(); i++) {
+            sb.append(line.get(i));
+            if (i < line.size() - 1) sb.append(" ");
+        }
         while (sb.length() < maxWidth) sb.append(" ");
         return sb.toString();
     }
