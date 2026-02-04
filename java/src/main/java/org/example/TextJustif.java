@@ -4,113 +4,108 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextJustif {
-    public List<String> fullJustify(String[] words, int maxWidth) {
-        StringBuilder sb;
-        List<String> result = new ArrayList<>();
-        int end = 0, currWord = 0, wordsPerLine = 0;
-        String separator = " ";
-        while (currWord < words.length) {
-            separator = " ";
-            wordsPerLine = 0;
-            sb = new StringBuilder();
-            int remainder = 0;
-            while (currWord < words.length && end + words[currWord].length() <= maxWidth) {
-                end += words[currWord++].length() + 1;
-                wordsPerLine++;
-            }
-            int additionalSpaces = maxWidth - (end - 1);
-            if (currWord != words.length) {
-                if (wordsPerLine > 1) remainder = additionalSpaces % (wordsPerLine - 1);
-                if (additionalSpaces >= (wordsPerLine - 1) && wordsPerLine > 1) {
-                    for (int i = 0; i <= additionalSpaces / (wordsPerLine - 1); i++) {
-                        sb.append(separator);
-                    }
-                    separator = sb.toString();
-                    sb = new StringBuilder();
-                }
-                int i = currWord - wordsPerLine;
-                for (; i < currWord - 1; i++) {
-                    sb.append(words[i]).append(separator);
-                    if (remainder > 0) {
-                        sb.append(" ");
-                        remainder--;
-                    }
-                }
-                sb.append(words[currWord - 1]);
-                if (wordsPerLine == 1) {
-                    while (sb.length() != maxWidth) {
-                        sb.append(" ");
-                    }
-                }
-            } else {
-                // if we are at last line...
-                separator = " ";
-                int i = currWord - wordsPerLine;
-                for (; i < currWord; i++) {
-                    sb.append(words[i]).append(separator);
-                }
-                while (sb.length() != maxWidth) sb.append(" ");
-            }
-            // how to deal with the last line?
-            result.add(sb.toString());
-            end = 0;
-        }
-        return result;
-    }
-
-
     public List<String> methodTwo(String[] words, int maxWidth) {
-        StringBuilder sb = new StringBuilder();
         List<String> line = new ArrayList<>();
         List<String> result = new ArrayList<>();
-        int totalChars = 0, currWordIndex = 0, gapIndex = 0;
-        String separator = " ";
-        String currentWord = "";
-        while (currWordIndex < words.length) {
-            currentWord = words[currWordIndex];
-            if (totalChars + line.size() - 1 + currentWord.length() >= maxWidth) {
-                if (line.size() == 1) {
-                    sb.append(line.removeFirst());
-                    sb.append(separator.repeat(Math.max(0, maxWidth - (totalChars))));
-                    line.add(sb.toString());
-                    sb = new StringBuilder();
-                } else {
-                    for (int i = 0; totalChars < maxWidth; i++) {
-                        sb.append(line.remove(i % (line.size() - 1)));
-                        sb.append(separator);
-                        line.add(i % (line.size()), sb.toString());
-                        sb = new StringBuilder();
-                        totalChars++;
-                    }
-                }
-                for (String str : line) {
-                    sb.append(str);
-                }
-                result.add(sb.toString());
-                sb = new StringBuilder();
+        int totalChars = 0, curr = 0;
+        while (curr < words.length) {
+            String word = words[curr];
+            // check if adding this word exceeds width
+            if (totalChars + word.length() + line.size() > maxWidth) {
+                result.add(justify(line, totalChars, maxWidth));
                 line = new ArrayList<>();
                 totalChars = 0;
             }
-            line.add(currentWord);
-            if (currWordIndex == words.length) {
-                break;
-            }
-            totalChars += currentWord.length();
-            currWordIndex++;
+            line.add(word);
+            totalChars += word.length();
+            curr++;
         }
-        if (line.size() == 1) {
-            sb.append(line.getFirst());
-        } else {
-            int i = 0;
-            for (; i < line.size() - 1; i++) {
-                sb.append(line.get(i)).append(separator);
-            }
-            sb.append(line.get(i));
-        }
-        totalChars = sb.length();
-        sb.append(separator.repeat(Math.max(0, maxWidth - (totalChars))));
-        result.add(sb.toString());
+        // last line -> left justify
+        result.add(leftJustify(line, maxWidth));
         return result;
+    }
+
+    private String justify(List<String> line, int totalChar, int maxWidth) {
+        if (line.size() == 1) return leftJustify(line, maxWidth);
+        int gaps = line.size() - 1;
+        int spaces = maxWidth - totalChar;
+        int even = spaces / gaps;
+        int extra = spaces % gaps;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < line.size(); i++) {
+            // It looks like you do not have to remove the string from the list to update it - Good to know
+            // todo - watch it do this in debug
+            sb.append(line.get(i));
+            if (i<gaps){
+                int count = even + (extra-- > 0? 1:0);
+                sb.append(" ".repeat(count));
+            }
+        }
+        return sb.toString();
+    }
+
+    private String leftJustify(List<String>line, int maxWidth) {
+        StringBuilder sb = new StringBuilder();
+
+        while(sb.length()<maxWidth) sb.append(" ");
+        return sb.toString();
+    }
+
+    public List<String> optimized_AI_generated(String[] words, int maxWidth) {
+        List<String> result = new ArrayList<>();
+        int curr = 0;
+
+        while (curr < words.length) {
+            int start = curr;
+            int totalChars = words[curr].length();
+            curr++;
+
+            // Collect as many words as fit
+            while (curr < words.length &&
+                    totalChars + 1 + words[curr].length() <= maxWidth) {
+                totalChars += 1 + words[curr].length();
+                curr++;
+            }
+
+            int end = curr - 1;
+            int numWords = end - start + 1;
+
+            StringBuilder sb = new StringBuilder();
+
+            // Last line or single word → left justify
+            if (curr == words.length || numWords == 1) {
+                for (int i = start; i <= end; i++) {
+                    sb.append(words[i]);
+                    if (i < end) sb.append(' ');
+                }
+                while (sb.length() < maxWidth) sb.append(' ');
+                result.add(sb.toString());
+                continue;
+            }
+
+            // Fully justify
+            int totalWordLength = 0;
+            for (int i = start; i <= end; i++) totalWordLength += words[i].length();
+
+            int spaces = maxWidth - totalWordLength;
+            int gaps = numWords - 1;
+
+            int even = spaces / gaps;
+            int extra = spaces % gaps;
+
+            for (int i = start; i <= end; i++) {
+                sb.append(words[i]);
+                if (i < end) {
+                    int count = even + (extra-- > 0 ? 1 : 0);
+                    sb.append(" ".repeat(count));
+                }
+            }
+
+            result.add(sb.toString());
+        }
+
+        return result;
+
     }
 
     public static void main(String[] args) {
