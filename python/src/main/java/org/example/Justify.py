@@ -84,16 +84,33 @@ def is_palindrome_iterative(values):
         right -= 1
     return same_value
 
+
 # more compact version of above returns left >= right
 def is_palindrome_iterative_compact(values):
     left = 0
-    right = len(values)-1
-    while values[left]==values[right]:
-        left+=1
-        right-=1
+    right = len(values) - 1
+    while values[left] == values[right]:
+        left += 1
+        right -= 1
     # if left is not bigger or equal to right there was a mismatch
-    return left>=right
+    return left >= right
+
 
 def is_palindrome_shorter(values):
-    return values==values[::-1]
+    return values == values[::-1]
 
+
+def multiply_all_digits(value):
+    # naming is based on the role of the value not the math definition
+    remainder = value // 10
+    digit_value = value % 10
+    print("multiply_all_digits: %-10d | remainder: %d, digit: %d" % (value, remainder, digit_value))
+    if remainder > 0:
+        result = multiply_all_digits(remainder)
+        print("-> %d * %d = %d" % (digit_value, result, digit_value * result))
+        return digit_value * result
+    else:
+        print(" ->" + str(value))
+        return value
+
+multiply_all_digits(1234)
