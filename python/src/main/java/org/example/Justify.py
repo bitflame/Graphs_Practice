@@ -83,3 +83,17 @@ def is_palindrome_iterative(values):
         left += 1
         right -= 1
     return same_value
+
+# more compact version of above returns left >= right
+def is_palindrome_iterative_compact(values):
+    left = 0
+    right = len(values)-1
+    while values[left]==values[right]:
+        left+=1
+        right-=1
+    # if left is not bigger or equal to right there was a mismatch
+    return left>=right
+
+def is_palindrome_shorter(values):
+    return values==values[::-1]
+
