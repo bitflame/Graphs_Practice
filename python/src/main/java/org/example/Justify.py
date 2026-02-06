@@ -1,3 +1,4 @@
+from math import remainder
 from typing import List
 
 
@@ -113,4 +114,52 @@ def multiply_all_digits(value):
         print(" ->" + str(value))
         return value
 
+
 multiply_all_digits(1234)
+
+
+def multiply_all_the_digits_shorter(value):
+    return functools.reduce(lambda x, y: int(x) * int(y), str(value))
+
+
+def myFeb(value):
+    if value == 1 or value == 2:
+        return 1
+    else:
+        return myFeb(value - 1) + myFeb(value - 2)
+
+
+print(f'Fib of 3: {myFeb(3)}')
+print(f'Fib of 4: {myFeb(4)}')
+print(f'Fib of 5: expecting 5,actual: {myFeb(5)}')
+print(f'Fib of 6: expecting 8,actual: {myFeb(6)}')
+
+
+def febIter(n):
+    if n==1 or n==2: return 1
+    n_min_1 = 1
+    n_min_2 = 1
+    result = 0
+    for i in range(2,n):
+        result=n_min_1+n_min_2
+        n_min_1 = n_min_2
+        n_min_2 = result
+    return result
+
+
+print(f'febIter result of 3: {febIter(3)}')
+print(f'febIter result of 4: {febIter(4)}')
+print(f'febIter result of 5: expecting 5,actual: {febIter(5)}')
+print(f'febIter result of 6: expecting 8,actual: {febIter(6)}')
+print(f'febIter result of 7: expecting 13,actual: {febIter(7)}')
+print(f'febIter result of 8: expecting 21,actual: {febIter(8)}')
+
+def count_digit(value, digits):
+    if value==0: return digits
+    remainder=value//10
+    digits+=1
+    return count_digit(remainder,digits)
+print(f'Expected value: 3, actual value: {count_digit(123,0)}')
+print(f'Expected value: 2, actual value: {count_digit(12,0)}')
+print(f'Expected value: 3, actual value: {count_digit(512,0)}')
+
