@@ -1,3 +1,5 @@
+import sys
+from functools import reduce
 from math import remainder
 from typing import List
 
@@ -203,3 +205,72 @@ def reverse_string(text, result):
 
 
 print(f'Expected output: txet emos, actual output: {reverse_string("some text", '')}')
+
+
+def reverse_string(text):
+    if len(text) <= 1: return text
+    fist_char = text[0]
+    remaining = text[1:]
+    return reverse_string(remaining).join(fist_char)
+
+
+# My implementation
+def sum_rec(values):
+    if len(values) == 1:
+        return values[0]
+    first = values[0]
+    return first + sum_rec(values[1::])
+
+
+def sum_rec_book(values):
+    return sum_helper(values, 0)
+
+
+def sum_helper(values, pos):
+    # recursive termination
+    if pos >= len(values): return 0
+    return values[pos] + sum_helper(values, pos + 1)
+
+
+# here is another example of reduce() and lambdas
+def yafunc(values):
+    return reduce(lambda x, y: x+1, values)
+
+vals = [1, 2, 3]
+print(f'Test 1 - expected output: 6 actual output: {sum_rec(vals)}')
+print(f'Test 1 - book\'s implementation expected output: 6 actual output: {sum_rec_book(vals)}')
+vals = [1, 2, 3, -7]
+print(f'Test 2 - expected output: -1 actual output: {sum_rec(vals)}')
+print(f'Test 2 - book\'s implementation expected output: -1 actual output: {sum_rec_book(vals)}')
+
+# My way bc I assumed he wants the function signature not to change
+def min_rec(values):
+    min = 0
+    if not values:
+        min = sys.maxsize
+        return min
+    elif len(values) == 1:
+        min = values[0]
+        return min
+    else:
+        if values[0] < values[1]: values[1] = values[0]
+        min = min_rec(values[1:])
+    return min
+
+def min_rec_book(values):
+    return min_helper(values,0,sys.maxsize)
+def min_helper(values, pos, min_value):
+# recursive termination
+    if pos >= len(values):
+        return min_value
+    value = values[pos]
+    if value < min_value:
+        min_value = value
+    return min_helper(values,pos+1, min_value)
+# extremly short way: return min(values)
+vals = [7, 2, 1, 9, 7, 1]
+print(f'Test 1 - Minimum value in a list expected output: 1 actual output: {min_rec(vals)}')
+vals = [11, 2, 33, 44, 55, 6, 7]
+print(f'Test 2 - Minimum value in a list expected output: 2 actual output: {min_rec(vals)}')
+vals = [1, 2, 3, -7]
+print(f'Test 3 - Minimum value in a list expected output: -7 actual output: {min_rec(vals)}')
