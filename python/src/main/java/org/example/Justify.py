@@ -136,12 +136,12 @@ print(f'Fib of 6: expecting 8,actual: {myFeb(6)}')
 
 
 def febIter(n):
-    if n==1 or n==2: return 1
+    if n == 1 or n == 2: return 1
     n_min_1 = 1
     n_min_2 = 1
     result = 0
-    for i in range(2,n):
-        result=n_min_1+n_min_2
+    for i in range(2, n):
+        result = n_min_1 + n_min_2
         n_min_1 = n_min_2
         n_min_2 = result
     return result
@@ -154,12 +154,31 @@ print(f'febIter result of 6: expecting 8,actual: {febIter(6)}')
 print(f'febIter result of 7: expecting 13,actual: {febIter(7)}')
 print(f'febIter result of 8: expecting 21,actual: {febIter(8)}')
 
-def count_digit(value, digits):
-    if value==0: return digits
-    remainder=value//10
-    digits+=1
-    return count_digit(remainder,digits)
-print(f'Expected value: 3, actual value: {count_digit(123,0)}')
-print(f'Expected value: 2, actual value: {count_digit(12,0)}')
-print(f'Expected value: 3, actual value: {count_digit(512,0)}')
 
+def count_digit(value, digits):
+    if value == 0: return digits
+    remainder = value // 10
+    digits += 1
+    return count_digit(remainder, digits)
+
+
+print(f'Expected value: 3, actual value: {count_digit(123, 0)}')
+print(f'Expected value: 2, actual value: {count_digit(12, 0)}')
+print(f'Expected value: 3, actual value: {count_digit(512, 0)}')
+
+
+def gcd(num1, num2):
+    if num2 == 0: return num1
+    return gcd(num2, num1 % num2)
+
+
+print(f'Test 1 of GCD function input: 15,9 expected output: 3, actual output: {gcd(15, 9)}')
+
+
+def gcdIter(num1, num2):
+    while num2 > 0:
+        temp = num2
+        num2 = num1 % num2
+        num1 = temp
+    return num1
+print(f'Test 1 of GCD-iterative input: 15,9 expected output: 3, actual output: {gcdIter(15, 9)}')
