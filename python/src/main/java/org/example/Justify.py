@@ -177,8 +177,29 @@ print(f'Test 1 of GCD function input: 15,9 expected output: 3, actual output: {g
 
 def gcdIter(num1, num2):
     while num2 > 0:
-        temp = num2
-        num2 = num1 % num2
-        num1 = temp
+        num1, num2 = num2, num1 % num2
     return num1
+
+
 print(f'Test 1 of GCD-iterative input: 15,9 expected output: 3, actual output: {gcdIter(15, 9)}')
+
+
+def lcm(num1, num2):
+    return num1 * num2 / gcd(num1, num2)
+
+
+print(f'Test 1 of lcm input: 7,2 expected output: 14, actual output: {lcm(7, 2)}')
+
+
+# I know the code below works
+# def reverse_string(text):
+#     return text[::-1]
+def reverse_string(text, result):
+    if len(text) == 0:
+        return result
+    else:
+        result = reverse_string(text[0:len(text) - 1], result + text[-1])
+    return result
+
+
+print(f'Expected output: txet emos, actual output: {reverse_string("some text", '')}')
