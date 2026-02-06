@@ -1,4 +1,5 @@
 import sys
+from ctypes import HRESULT
 from functools import reduce
 from math import remainder
 from typing import List
@@ -234,7 +235,8 @@ def sum_helper(values, pos):
 
 # here is another example of reduce() and lambdas
 def yafunc(values):
-    return reduce(lambda x, y: x+1, values)
+    return reduce(lambda x, y: x + 1, values)
+
 
 vals = [1, 2, 3]
 print(f'Test 1 - expected output: 6 actual output: {sum_rec(vals)}')
@@ -242,6 +244,7 @@ print(f'Test 1 - book\'s implementation expected output: 6 actual output: {sum_r
 vals = [1, 2, 3, -7]
 print(f'Test 2 - expected output: -1 actual output: {sum_rec(vals)}')
 print(f'Test 2 - book\'s implementation expected output: -1 actual output: {sum_rec_book(vals)}')
+
 
 # My way bc I assumed he wants the function signature not to change
 def min_rec(values):
@@ -257,16 +260,21 @@ def min_rec(values):
         min = min_rec(values[1:])
     return min
 
+
 def min_rec_book(values):
-    return min_helper(values,0,sys.maxsize)
+    return min_helper(values, 0, sys.maxsize)
+
+
 def min_helper(values, pos, min_value):
-# recursive termination
+    # recursive termination
     if pos >= len(values):
         return min_value
     value = values[pos]
     if value < min_value:
         min_value = value
-    return min_helper(values,pos+1, min_value)
+    return min_helper(values, pos + 1, min_value)
+
+
 # extremly short way: return min(values)
 vals = [7, 2, 1, 9, 7, 1]
 print(f'Test 1 - Minimum value in a list expected output: 1 actual output: {min_rec(vals)}')
@@ -274,3 +282,19 @@ vals = [11, 2, 33, 44, 55, 6, 7]
 print(f'Test 2 - Minimum value in a list expected output: 2 actual output: {min_rec(vals)}')
 vals = [1, 2, 3, -7]
 print(f'Test 3 - Minimum value in a list expected output: -7 actual output: {min_rec(vals)}')
+
+
+def to_binary(n):
+    return binary_helper(n,[])[::-1]
+
+
+def binary_helper(n, result):
+    if n == 0: return result
+    else:
+        result.append(n%2)
+        binary_helper(n // 2, result)
+    return result
+
+
+print(f'Test 1 of Binary Conversion - expected output: 1011100. actual output: {to_binary(92)}')
+print(f'Test 1 of Binary Conversion - expected output: 101. actual output: {to_binary(5)}')
