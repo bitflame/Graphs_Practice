@@ -285,16 +285,49 @@ print(f'Test 3 - Minimum value in a list expected output: -7 actual output: {min
 
 
 def to_binary(n):
-    return binary_helper(n,[])[::-1]
+    return binary_helper(n, [])[::-1]
 
 
 def binary_helper(n, result):
-    if n == 0: return result
+    if n == 0:
+        return result
     else:
-        result.append(n%2)
+        result.append(n % 2)
         binary_helper(n // 2, result)
     return result
 
 
+# Here is how the book did it
+def to_bin(n):
+    if n < 0: raise ValueError("n must bee >=0")
+    if n <= 1:
+        return str(n)
+    remain, last_digit = divmod(n, 2)
+    return to_bin(remain) + str(last_digit)
+
+
 print(f'Test 1 of Binary Conversion - expected output: 1011100. actual output: {to_binary(92)}')
-print(f'Test 1 of Binary Conversion - expected output: 101. actual output: {to_binary(5)}')
+print(f'Test 2 of Binary Conversion - expected output: 101. actual output: {to_binary(5)}')
+print(f'Test 3 of Binary Conversion - expected output: 111. actual output: {to_binary(7)}')
+print(f'Test 4 of Binary Conversion - expected output: 10110. actual output: {to_binary(22)}')
+print(f'Test 5 of Binary Conversion - expected output: 101010. actual output: {to_binary(42)}')
+print(f'Test 6 of Binary Conversion - expected output: 10000000. actual output: {to_binary(256)}')
+print(f'Test 7 of Binary Conversion - expected output: 1. actual output: {to_binary(1)}')
+
+
+def to_octal(n):
+    if n < 0: raise ValueError('n must be >= 0')
+    if n <= 1:
+        return str(n)
+    reminder, digit = divmod(n, 8)
+    if reminder == 0:
+        return str(digit)
+    else:
+        return to_octal(reminder) + str(digit)
+
+
+print(f'expected value: 55, actual value: {to_octal(45)}')
+print(f'expected value: 7, actual value: {to_octal(7)}')
+print(f'expected value: 10, actual value: {to_octal(8)}')
+print(f'expected value: 52, actual value: {to_octal(42)}')
+
