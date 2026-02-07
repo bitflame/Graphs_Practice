@@ -317,13 +317,10 @@ print(f'Test 7 of Binary Conversion - expected output: 1. actual output: {to_bin
 
 def to_octal(n):
     if n < 0: raise ValueError('n must be >= 0')
-    if n <= 1:
+    if n <= 7:
         return str(n)
     reminder, digit = divmod(n, 8)
-    if reminder == 0:
-        return str(digit)
-    else:
-        return to_octal(reminder) + str(digit)
+    return to_octal(reminder) + str(digit)
 
 
 print(f'expected value: 55, actual value: {to_octal(45)}')
@@ -331,3 +328,70 @@ print(f'expected value: 7, actual value: {to_octal(7)}')
 print(f'expected value: 10, actual value: {to_octal(8)}')
 print(f'expected value: 52, actual value: {to_octal(42)}')
 
+
+def to_hex_firstAttempt(n):
+    if n < 0: raise ValueError('n has to be >= 0')
+    if n == 15:
+        return 'F'
+    elif n == 14:
+        return to_hex_firstAttempt(n) + 'E'
+    elif n == 13:
+        return to_hex_firstAttempt(n) + 'D'
+    elif n == 12:
+        return to_hex_firstAttempt(n) + 'C'
+    elif n == 11:
+        return to_hex_firstAttempt(n) + 'B'
+    elif n == 10:
+        return to_hex_firstAttempt(n) + 'A'
+    elif n < 10:
+        return str(n)
+    rem, digit = divmod(n, 16)
+    if digit == 15:
+        return to_hex_firstAttempt(rem) + 'F'
+    elif digit == 14:
+        return to_hex_firstAttempt(rem) + 'E'
+    elif digit == 13:
+        return to_hex_firstAttempt(rem) + 'D'
+    elif digit == 12:
+        return to_hex_firstAttempt(rem) + 'C'
+    elif digit == 11:
+        return to_hex_firstAttempt(rem) + 'B'
+    elif digit == 10:
+        return to_hex_firstAttempt(rem) + 'A'
+    else:
+        return to_hex_firstAttempt(rem) + str(digit)
+
+
+print(f'to_hex_firstAttempt results expected value: F, actual value: {to_hex_firstAttempt(15)}')
+print(f'to_hex_firstAttempt results expected value: 4D, actual value: {to_hex_firstAttempt(77)}')
+print(f'to_hex_firstAttempt results expected value: 20, actual value: {to_hex_firstAttempt(32)}')
+print(f'to_hex_firstAttempt results expected value: 40, actual value: {to_hex_firstAttempt(64)}')
+
+
+def to_hex(n):
+    if n < 0: raise ValueError('n must be >= 0')
+    # recursive termination
+    if n <= 15:
+        return as_hex_digit(n)
+    rema, dig = divmod(n, 16)
+    return to_hex(rema) + as_hex_digit(dig)
+
+
+def as_hex_digit(n):
+    if 0 <= n < 9: return str(n)
+    if 10 <= n <= 15:
+        # special char arithmetic
+        return chr(ord('A') + (n - 10))
+    raise ValueError("value not in range 0 - 15, " + "but is:" + n)
+
+
+print(f'to_hex() results expected value: F, actual value: {to_hex(15)}')
+print(f'to_hex() results expected value: 4D, actual value: {to_hex(77)}')
+print(f'to_hex() results expected value: 20, actual value: {to_hex(32)}')
+print(f'to_hex() results expected value: 40, actual value: {to_hex(64)}')
+
+# more elegant solution for as_hex_digit()
+def super_as_hex(n):
+    if 0<=n <= 15:
+        return "0123456789ABCDEF"[n]
+    raise ValueError("value not in range 0 - 15, "+" but is: "+n)
