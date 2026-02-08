@@ -443,3 +443,42 @@ def is_power_of_2_short(n):
     return n < 2 and n == 1 or n % 2 == 0 and is_power_of_2_short(n // 2)
 
 
+def power_of(value, exponent):
+    if exponent < 0: raise ValueError('exponent mush be >= 0')
+    # recursive termination
+    if exponent == 0:
+        return 1
+    if exponent == 1:
+        return value
+    return value * power_of(value, exponent - 1)
+
+
+print(f'input: 4,2. Expected output: 16, actual output: {power_of(4, 2)}')
+
+
+def power_of_optimized(value, exponent):
+    if exponent < 0: raise ValueError('exponent must be >= 0')
+    if exponent == 0: return 1
+    if exponent == 1: return value
+    result = power_of_optimized(value * value, exponent // 2)
+    if exponent % 2 == 1:
+        result = result * value
+    return result
+
+
+print(f'unit test 1 - power_of_optimized() input: 4,2. Expected output: 16, actual output: {power_of(4, 2)}')
+
+
+
+def power_of_iterative(value, exp):
+    result = 1
+    while exp > 0:
+        result=result*value
+        exp-=1
+    return result
+
+print(f'unit test 1 - power_of_iterative() input: 4,2. Expected output: 16, actual output: {power_of_iterative(4, 2)}')
+print(f'unit test 2 - power_of_iterative() input: 2,2. Expected output: 4, actual output: {power_of_iterative(2, 2)}')
+print(f'unit test 3 - power_of_iterative() input: 2,8. Expected output: 256, actual output: {power_of_iterative(2, 8)}')
+print(f'unit test 3 - power_of_iterative() input: 2,3. Expected output: 8, actual output: {power_of_iterative(2, 3)}')
+print(f'unit test 4 - power_of_iterative() input: 4,4. Expected output: 256, actual output: {power_of_iterative(4, 4)}')
