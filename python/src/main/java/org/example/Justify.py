@@ -390,8 +390,56 @@ print(f'to_hex() results expected value: 4D, actual value: {to_hex(77)}')
 print(f'to_hex() results expected value: 20, actual value: {to_hex(32)}')
 print(f'to_hex() results expected value: 40, actual value: {to_hex(64)}')
 
+
 # more elegant solution for as_hex_digit()
 def super_as_hex(n):
-    if 0<=n <= 15:
+    if 0 <= n <= 15:
         return "0123456789ABCDEF"[n]
-    raise ValueError("value not in range 0 - 15, "+" but is: "+n)
+    raise ValueError("value not in range 0 - 15, " + " but is: " + n)
+
+
+# first attempt
+def is_power_of_2(n):
+    if n <= 0: raise ValueError('n must be > 0')
+    if n == 1 or n == 2: return True
+    rem, dig = divmod(n, 2)
+    if dig == 1 and n != 1:
+        return False
+    else:
+        return is_power_of_2(rem)
+
+
+print(f'input: 1, expected output: True. actual output: {is_power_of_2(1)}')
+print(f'input: 2, expected output: True. actual output: {is_power_of_2(2)}')
+print(f'input: 3, expected output: False. actual output: {is_power_of_2(3)}')
+print(f'input: 4, expected output: True. actual output: {is_power_of_2(4)}')
+print(f'input: 5, expected output: Flase. actual output: {is_power_of_2(5)}')
+print(f'input: 6, expected output: False. actual output: {is_power_of_2(6)}')
+print(f'input: 8, expected output: True. actual output: {is_power_of_2(8)}')
+print(f'input: 12, expected output: False. actual output: {is_power_of_2(12)}')
+print(f'input: 16, expected output: True. actual output: {is_power_of_2(16)}')
+
+
+# books code
+def is_power_of_two(n):
+    if n < 2:
+        return n == 1
+    if n % 2 == 1: return False
+    return is_power_of_two(n // 2)
+
+
+print(f'input: 1, is_power_of_two expected output: True. actual output: {is_power_of_two(1)}')
+print(f'input: 2, is_power_of_two expected output: True. actual output: {is_power_of_two(2)}')
+print(f'input: 3, is_power_of_two expected output: False. actual output: {is_power_of_two(3)}')
+print(f'input: 4, is_power_of_two expected output: True. actual output: {is_power_of_two(4)}')
+print(f'input: 5, is_power_of_two expected output: Flase. actual output: {is_power_of_two(5)}')
+print(f'input: 6, is_power_of_two expected output: False. actual output: {is_power_of_two(6)}')
+print(f'input: 8, is_power_of_two expected output: True. actual output: {is_power_of_two(8)}')
+print(f'input: 12, is_power_of_two expected output: False. actual output: {is_power_of_two(12)}')
+print(f'input: 16, is_power_of_two expected output: True. actual output: {is_power_of_two(16)}')
+
+
+def is_power_of_2_short(n):
+    return n < 2 and n == 1 or n % 2 == 0 and is_power_of_2_short(n // 2)
+
+
