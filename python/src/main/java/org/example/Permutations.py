@@ -1,3 +1,4 @@
+# from book Python Challenges by Micahel Inden
 def calc_permutation(text):
     # recursive termination
     if is_blank(text) or len(text) == 1:
