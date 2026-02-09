@@ -58,7 +58,7 @@ def optimized_num_pal(number):
 
 def helper(original_num, current_value, remaining_val):
     if original_num == current_value: return True
-    if remaining_val < 0: return False
+    if remaining_val < 1: return False
     last_digit = remaining_val % 10
     new_curr_val = current_value * 10 + last_digit
     new_remaining_val = remaining_val // 10
@@ -67,6 +67,9 @@ def helper(original_num, current_value, remaining_val):
 
 print(f'Test 1 optimized_num_pal() input: 737, expected output: True, actual output: {optimized_num_pal(737)}')
 print(f'Test 2 optimized_num_pal() input: 13, expected output: False, actual output: {optimized_num_pal(13)}')
-@pytest.mark.parametrize("number, expected", [(7,True),(13, False),(171, True),(47742, False),(123321,True),(1234554321,True)])
+
+
+@pytest.mark.parametrize("number, expected",
+                         [(7, True), (13, False), (171, True), (47742, False), (123321, True), (1234554321, True)])
 def test_is_number_palindrome(number, expected):
-    assert optimized_num_pal(number)== expected
+    assert optimized_num_pal(number) == expected
