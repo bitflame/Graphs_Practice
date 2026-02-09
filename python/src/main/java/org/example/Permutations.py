@@ -23,3 +23,28 @@ letters = 'AB'
 print(f'Test 1- input: ABC, expecting: AB, BA, actual output: {calc_permutation(letters)}')
 letters = [letters[0] + letters[1::], letters[1::] + letters[0]]
 print(letters)
+
+
+# here is an optimized version of the above
+def cal_permutations_mini_opt(text):
+    return __calc_permutations_mini_opt_helper(text, "")
+
+
+def __calc_permutations_mini_opt_helper(remaining, prefix):
+    # recursive terminations
+    if len(remaining) == 0:
+        return {prefix}
+    candidates = set()
+
+    for i, current_char in enumerate(remaining):
+        new_prefix = prefix + current_char
+        new_remaining = remaining[0:i] + remaining[i + 1:]
+
+        # recursive descent
+        candidates.update(__calc_permutations_mini_opt_helper(new_remaining, new_prefix))
+    return candidates
+
+
+letters = 'ABC'
+print(
+    f'Test 1- Permutation optimized input: ABC, expecting: ABC, ACB, BAC, BCA, CAB, CBA, actual output: {cal_permutations_mini_opt(letters)}')
