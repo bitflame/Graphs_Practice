@@ -8,13 +8,5 @@ def fractal_generator(n):
         fractal_generator(n - 1)
 
 
-print(fractal_generator(2))
+print(fractal_generator(4))
 
-
-def ruler(n):
-    if n == 0: return n
-    print('-' * n * 2 + f'{ruler(n - 1)}')
-
-
-print('Calling ruler')
-ruler(2)
