@@ -102,3 +102,10 @@ print('xhixhix'.count('hi'))
 print('mic'.count('mic'))
 print('hahah'.count('ho'))
 print('xxxxyz'.count('xx'))
+
+def yetAnotherFunction(message, repeat):
+    if repeat==0: return
+    repeat-=1
+    print(message)
+    yetAnotherFunction(message,repeat)
+print(yetAnotherFunction('Hello World',5))
