@@ -48,3 +48,27 @@ def __calc_permutations_mini_opt_helper(remaining, prefix):
 letters = 'ABC'
 print(
     f'Test 1- Permutation optimized input: ABC, expecting: ABC, ACB, BAC, BCA, CAB, CBA, actual output: {cal_permutations_mini_opt(letters)}')
+
+
+def myMethod(chars):
+    if len(chars) == 1: return chars
+    combinations = set()
+    for i, newChar in enumerate(chars):
+        permutations = myMethod(chars[:i] + chars[i+1:])
+        for permutation in permutations:
+            combinations.add(newChar + permutation)
+    return combinations
+
+
+print(f'{myMethod('ABC')}')
+# example of using the itertools function
+import itertools
+def cal_permutation_built_in(text):
+    result_tuples=list(itertools.permutations(text))
+    return {"".join(tuple) for tuple in result_tuples}
+
+
+for per in itertools.permutations('ABC'):
+    print(per)
+
+print(cal_permutation_built_in('ABC'))
