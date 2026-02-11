@@ -1,22 +1,16 @@
 def fractal_generator(index, n):
     if n < 0.125: return
-    #   fractal_generator(index, n / 2)
     if n % 1 == 0:
         print(f"---- {index}")
-    if n == 0.125:
-        print("---")
-    elif n == 0.25:
-        print("--")
-    if n == 0.5:
-        print("-")
     fractal_generator(index, n / 2)
     if n == 0.5:
         print("---")
-    if n == 0.25:
+    elif n == 0.25:
         print("--")
-    if n == 0.125:
+    elif n == 0.125:
         print("-")
-
+    if n < 1:
+        fractal_generator(index, n / 2)
 
 # fractal_generator(1)
 
