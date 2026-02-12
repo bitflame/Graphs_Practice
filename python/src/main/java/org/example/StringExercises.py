@@ -1,6 +1,6 @@
 # ch four stuff write a function that checks a number to be binary, to run faster you can hard code the
-# ascii values of 1 and 0 so you don't have to look it up every time and you can use a variable for the
-# ascii of the digit so you don't hav e to call it twice
+# ascii values of 1 and 0 so you don't have to look it up every time  also, you can use a variable for the
+# ascii of the digit so you don't have to call it twice
 def is_binary_number(number):
     if not number: return False
     for digit in number:
