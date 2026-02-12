@@ -43,11 +43,11 @@ def is_bin_optimized(number):
         if i not in '10':
             return False
     return True
-print(f'Test 1 - expected output: True, actual output: {is_bin('1100')}')
-print(f'Test 2 - expected output: False, actual output: {is_bin('1127')}')
-print(f'Test 3 - expected output: True, actual output: {is_bin('11')}')
-print(f'Test 4 - expected output: True, actual output: {is_bin('00')}')
-print(f'Test 5 - expected output: True, actual output: {is_bin('1')}')
-print(f'Test 6 - expected output: True, actual output: {is_bin('0')}')
-print(f'Test 7 - expected output: False, actual output: {is_bin('A')}')
-print(f'Test 8 - expected output: False, actual output: {is_bin('!')}')
+print(f'Test 1 - expected output: True, actual output: {is_bin_optimized('1100')}')
+print(f'Test 2 - expected output: False, actual output: {is_bin_optimized('1127')}')
+print(f'Test 3 - expected output: True, actual output: {is_bin_optimized('11')}')
+print(f'Test 4 - expected output: True, actual output: {is_bin_optimized('00')}')
+print(f'Test 5 - expected output: True, actual output: {is_bin_optimized('1')}')
+print(f'Test 6 - expected output: True, actual output: {is_bin_optimized('0')}')
+print(f'Test 7 - expected output: False, actual output: {is_bin_optimized('A')}')
+print(f'Test 8 - expected output: False, actual output: {is_bin_optimized('!')}')
