@@ -3,6 +3,7 @@ def binary_to_decimal(number):
     for index, digit in enumerate(reversed(number)):
         if digit == '1':
             result += int(digit) * pow(2, index)
+            # result += 2 ** index is even better
     return result
 
 
