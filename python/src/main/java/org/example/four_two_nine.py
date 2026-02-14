@@ -1,16 +1,19 @@
 def contains_rotation(str1, str2):
-    text_index, pattern_index = 0, 0
-    m = len(str1)
     n = len(str2)
-    while text_index < m:
-        if str1[text_index].lower() == str2[pattern_index].lower():
-            if pattern_index == n - 1:
+    m = len(str1)
+    for i in range(m):
+        for j in range(n):
+            if str1[i] != str2[j]:
+                break
+            elif i == j:
+                i += 1
+            if j == n - 1:
                 return True
-            text_index += 1
-            pattern_index += 1
-        else:
-            text_index += 1
     return False
 
 
 print(f'Test 1- Expected output: True, actual output: {contains_rotation('ABCD', 'ABC')}')
+print(f'Test 2- Expected output: True, actual output: {contains_rotation('ABCDEF', 'EFAB')}')
+print(f'Test 3- Expected output: True, actual output: {contains_rotation('ABCDEF', 'efAB')}')
+print(f'Test 3- Expected output: True, actual output: {contains_rotation('ABABABABCAB', 'ABC')}')
+print(f'Test 4- Expected output: False, actual output: {contains_rotation('ABCDEF', 'EFAD')}')
