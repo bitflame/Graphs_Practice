@@ -10,8 +10,8 @@ def my_method(my_str):
                 str_counter += 1
             else:
                 current_row.append(None)
-        two_dem_aray.append(current_row)
-    return two_dem_aray
+        two_dem_array.append(current_row)
+    return two_dem_array
 
 
 testStr = 'abcdefghi'
