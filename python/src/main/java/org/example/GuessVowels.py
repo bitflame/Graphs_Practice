@@ -1,5 +1,5 @@
 def translate_vowels(text, replacement):
-    vowels = {'a', 'e', 'i', 'o', 'u'}
+    vowels = {'a', 'e', 'i', 'o', 'u', }
     result = []
     for curr in text:
         if curr.lower() in vowels:
