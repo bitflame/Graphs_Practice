@@ -1,9 +1,10 @@
 def str_to_octal(num_txt):
-    result = 1
+    result = 0
+    rank = 1
     M = len(num_txt)
     for i in range(M - 1, 1, -1):
-        result *= 8
-        result += ord(num_txt[i]) - 48
+        result += (ord(num_txt[i]) - 48) * rank
+        rank *= 8
     return result
 
 
@@ -15,16 +16,23 @@ def str_to_num(num_txt):
     isNeg = False
     counter = 0
     m = len(num_txt)
-    while (counter < m and num_txt[counter] not in my_digits):
+    while (counter < m and num_txt[counter] not in my_digits or num_txt[counter] == '0' and num_txt[
+        counter + 1] == 'o'):
         if num_txt[counter] == '-':
             isNeg = True
+            if num_txt[counter + 1] == '0' and num_txt[counter + 2] == 'o':
+                result = str_to_octal(num_txt[1:])
+                return - result
         elif num_txt[counter] == '+':
+            if num_txt[counter + 1] == '0' and num_txt[counter + 2] == 'o':
+                result = str_to_octal(num_txt[1:])
+                return result
             start += 1
             counter += 1
-            if num_txt[counter] == '0' and num_txt[counter + 1] == 'o':
-                result = str_to_octal(num_txt)
-                return result
             continue
+        elif num_txt[counter] == '0' and num_txt[counter + 1] == 'o':
+            result = str_to_octal(num_txt)
+            return result
         elif num_txt[counter] not in my_digits:
             return ValueError('The must contain numbers or negative sign. Nothing else!')
         elif num_txt[counter] == '0' and num_txt[counter + 1] == 'o':
@@ -49,7 +57,7 @@ print(f'Test 6 - input: -0123, expected output: -123 actual output: {str_to_num(
 print(f'Test 7 - input: +0123, expected output: 123 actual output: {str_to_num('+0123')}')
 print(f'Test 8 - input: 0o77, expected output: 63 actual output: {str_to_num('0o77')}')
 print(f'Test 9 - input: -0o77, expected output: -63 actual output: {str_to_num('-0o77')}')
-print(f'Test 10 - input: +0o77, expected output: -63 actual output: {str_to_num('+0o77')}')
-print(f'Test 11 - input: +0o77, expected output: -63 actual output: {str_to_num('+0o77')}')
+print(f'Test 10 - input: +0o77, expected output: 63 actual output: {str_to_num('+0o77')}')
+print(f'Test 11 - input: +0o77, expected output: 63 actual output: {str_to_num('+0o77')}')
 print(f'Test 12 - input: -0o123, expected output: -83 actual output: {str_to_num('-0o123')}')
 print(f'Test 13 - input: 0o123, expected output: 83 actual output: {str_to_num('0o123')}')
