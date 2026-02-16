@@ -3,6 +3,7 @@ def str_to_octal(num_txt):
     rank = 1
     M = len(num_txt)
     for i in range(M - 1, 1, -1):
+        if (ord(num_txt[i]) - 48) > 8: return ValueError('Octal numbers can not have digits > 8.')
         result += (ord(num_txt[i]) - 48) * rank
         rank *= 8
     return result
@@ -61,3 +62,4 @@ print(f'Test 10 - input: +0o77, expected output: 63 actual output: {str_to_num('
 print(f'Test 11 - input: +0o77, expected output: 63 actual output: {str_to_num('+0o77')}')
 print(f'Test 12 - input: -0o123, expected output: -83 actual output: {str_to_num('-0o123')}')
 print(f'Test 13 - input: 0o123, expected output: 83 actual output: {str_to_num('0o123')}')
+print(f'Test 13 - input: 0o129, expected output is an error message actual output: {str_to_num('0o129')}')
