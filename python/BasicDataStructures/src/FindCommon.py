@@ -35,15 +35,16 @@ print("expected answer [2], actual answer: ", f.find_common(vals_one, vals_two))
 vals_one = [3, 1, 32]
 vals_two = [22]
 print("expected answer [], actual answer: ", f.find_common(vals_one, vals_two))
-vals_one = [1,2,4,7,8]
-vals_two = [2,3,7,9]
+vals_one = [1, 2, 4, 7, 8]
+vals_two = [2, 3, 7, 9]
 print("expected answer [2,7], actual answer: ", f.find_common(vals_one, vals_two))
-vals_one = [1,2,7,4, 7,8]
-vals_two = [7,7,3,2,9]
+vals_one = [1, 2, 7, 4, 7, 8]
+vals_two = [7, 7, 3, 2, 9]
 print("expected answer [2,7], actual answer: ", f.find_common(vals_one, vals_two))
-vals_one = [2,4,6,8]
-vals_two = [1,3,5,7,9]
+vals_one = [2, 4, 6, 8]
+vals_two = [1, 3, 5, 7, 9]
 print("expected answer [], actual answer: ", f.find_common(vals_one, vals_two))
+
 
 # book's method..
 def find_common_book(values1, values2):
@@ -51,20 +52,59 @@ def find_common_book(values1, values2):
     populate_from_collection1(values1, results)
     mark_if_also_in_second(values2, results)
     return remove_all_just_in_first(results)
+
+
 def populate_from_collection1(values1, results):
     for elem1 in values1:
-        results[elem1]=1
+        results[elem1] = 1
+
+
 def mark_if_also_in_second(values2, results):
     for elem2 in values2:
         if elem2 in results:
-            results[elem2]+=1
+            results[elem2] += 1
+
+
 def remove_all_just_in_first(results):
     final_result = set()
     for key, value in results.items():
-        if value >=2:
+        if value >= 2:
             final_result.add(key)
     return final_result
 
 
 def bestMethod(values1, values2):
-    return list(set(values1)&set(values2))
+    return list(set(values1) & set(values2))
+
+
+def my_reverse(values):
+    result = []
+    for i in range(len(values) - 1, -1, -1):
+        result.append(values[i])
+    return result
+
+
+def my_reverse_inplace(values):
+    l, r = 0, len(values) - 1
+    temp = 0
+    while l < r:
+        temp = values[r]
+        values[r] = values[l]
+        values[l] = temp
+        l += 1
+        r -= 1
+
+
+my_list = [4, 3, 2, 1]
+
+
+def using_list_comprehenssion(my_list):
+    return [my_list[i] for i in range(len(my_list) - 1, -1, -1)]
+
+
+print(my_reverse(my_list))
+my_reverse_inplace(my_list)
+print(my_list)
+my_list = [5, 4, 3, 2, 1]
+my_reverse_inplace(my_list)
+print(my_list)
