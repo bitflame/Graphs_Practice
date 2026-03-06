@@ -1,3 +1,4 @@
+import numpy as np
 def print_box(width, height, fill_char):
     for row in range(height):
         for col in range(width):
