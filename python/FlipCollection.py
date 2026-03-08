@@ -1,5 +1,7 @@
 import numpy as np
 
+from ArrayFun import second_input_list
+
 
 def my_method(my_data):
     original_length_y = len(my_input_data)  # should be 3
@@ -19,6 +21,7 @@ def my_method(my_data):
 
 
 my_input_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+my_np_data = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 print(my_input_data)
 my_method(my_input_data)
 
@@ -36,8 +39,22 @@ def flip_horizontally(value2dim):
             value2dim[y][left_idx] = right_value
             value2dim[y][right_idx] = left_value
             left_idx += 1
-            right_idx += 1
+            right_idx -= 1
+    return value2dim
 
+
+def swap(values, first, second):
+    value1 = vaules[first]
+    value2 = vaules[second]
+    values[second]=value1
+    values[first]=value2
+
+def flip_horizontally_with_swap(values):
+    max_x, max_y = get_dimension(vaules)
+    for y in range(max_y//2):
+        left_idx = 0
+        right_idx = max_x-1
+        swap(vaules,left_idx,right_idx)
 
 def flip_vertically(values2dim):
     max_y, max_x = get_dimension(values2dim)
@@ -60,6 +77,9 @@ def get_dimension(values2dim):
         return values2dim.shape
     raise ValueError("unsupported type", type(values2dim))
 
+print(flip_horizontally(my_input_data))
+print('Testing flip_horizontally with Numpy Array.')
+print(flip_horizontally(my_np_data))
 
 def is_palindrome(values):
     if isinstance(values, list):
