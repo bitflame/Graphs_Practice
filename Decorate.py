@@ -1,3 +1,32 @@
+def fibonacci(n):
+    if n == 1 or n == 0:
+        return 1
+    else:
+        return (n - 1) + (n - 2)
+
+
+def memoized_febo(n):
+    return memoized_febo_helper(n, {})
+
+
+def memoized_febo_helper(n, dict):
+    result = 0
+    if n in dict:
+        return dict.get(n)
+    if n == 1 or n == 0:
+        result = 1
+    else:
+        result = memoized_febo_helper(n - 1, dict) + memoized_febo_helper(n - 2, dict)
+    dict[n] = result
+    return result
+
+
+print(memoized_febo(1))
+print(memoized_febo(2))
+print(memoized_febo(3))
+print(memoized_febo(4))
+
+
 def both_vals_should_be_pos(binary_func):
     def helper(val1, val2):
         if type(val1) == int and val1 > 0 and type(val2) == int and val2 > 0:
