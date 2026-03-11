@@ -1,3 +1,71 @@
+import functools
+
+
+def decorate_with_memo_shorter(func):
+    lookup_map = dict()
+
+    @functools.wraps(func)
+    def helper(*args):
+        if args not in lookup_map:
+            lookup_map[args] = func(*args)
+        return lookup_map[args]
+
+    return helper
+
+
+@decorate_with_memo_shorter
+def pascal_rec(row, col):
+    if col == 1 and row == 1:
+        return 1
+    if col == 1 or col == row:
+        return 1
+    return pascal_rec(row - 1, col) + pascal_rec(row - 1, col - 1)
+
+
+def print_pascal_rec(n):
+    for row in range(1, n + 1):
+        for col in range(1, row + 1):
+            print(pascal_rec(row, col), end=' ')
+
+        print()
+
+
+print_pascal_rec(3)
+
+
+def check_argument_is_positive_integer(unary_func):
+    def helper(n):
+        if type(n) == int and n > 0:
+            return unary_func(n)
+        else:
+            raise ValueError('The variables you pass to function should be positive.')
+
+    return helper
+
+
+def another_decorator_function(func):
+    @functools.wraps(func)
+    def helper(*args):
+        for item in enumerate(args):
+            if item > 0:
+                return func(*args)
+            else:
+                raise ValueError('All numbers should be positive.')
+        return helper
+
+
+# @decorate_with_memo_shorter
+@ functools.lru_cache(maxsize=None)
+@check_argument_is_positive_integer
+def fib_rec(n):
+    if n == 1 or n == 2:
+        return 1
+    return fib_rec(n - 1) + fib_rec(n - 2)
+
+print(fib_rec.cache_info())
+print(fib_rec(5))
+print(fib_rec.cache_info())
+
 def calc_pascal(row, col):
     if row == 1 and col == 1:
         return 1
@@ -32,6 +100,7 @@ def print_pascal(n):
             print(calc_pascal_memoized(row, col), end=' ')
 
         print()
+
 
 print_pascal(6)
 
