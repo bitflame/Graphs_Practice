@@ -1,3 +1,13 @@
+def pascal_memo(n):
+
+
+
+
+
+
+print(pascal_memo(4))
+
+
 def fibonacci(n):
     if n == 1 or n == 0:
         return 1
