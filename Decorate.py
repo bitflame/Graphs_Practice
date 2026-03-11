@@ -6,14 +6,6 @@ def calc_pascal(row, col):
     return calc_pascal(row - 1, col) + calc_pascal(row - 1, col - 1)
 
 
-def print_pascal(n):
-    for row in range(1, n + 1):
-        for col in range(1, row + 1):
-            print(calc_pascal(row, col), end=' ')
-
-        print()
-
-
 def calc_pascal_memoized(row, col):
     return calc_pascal_helper(row, col, {})
 
@@ -22,6 +14,7 @@ def calc_pascal_helper(row, col, lookup_table):
     key = (row, col)
     result = 0
     if key in lookup_table:
+        # print('had a table hit.') For n=10 we have 5 table hits:)
         return lookup_table[key]
     if row == 1 and col == 1:
         return 1
@@ -40,8 +33,7 @@ def print_pascal(n):
 
         print()
 
-
-print_pascal(5)
+print_pascal(6)
 
 
 def fibonacci(n):
