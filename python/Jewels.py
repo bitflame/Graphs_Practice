@@ -1,7 +1,9 @@
 import random
-from sys import orig_argv
+
 
 import numpy as np
+
+from Direction import Direction
 
 
 def init_jewels_board(width, height, num_of_colors):
@@ -71,7 +73,7 @@ def mark_elements_for_removal(values2dim):
         for x in range(max_x):
             dirs_with_chains = find_chains(values2dim, x, y)
 
-            mark_chains_for_removal(values2dim, x, y)
+            mark_chains_for_removal(values2dim, x, y,dirs_with_chains)
 
 
 def erase_all_marked(values2dim):
@@ -99,21 +101,19 @@ def find_chains(values2dim, start_x, start_y):
     if orig_value == 0:
         return []
     dirs_with_chains = []
-
     relevant_dirs = (Direction.S, Direction.SW, Direction.E, Direction.SE)
 
     for current_dir in relevant_dirs:
         length = 1
-
-    dx, dy = current_dir.value
-    next_pos_x = start_x + dx
-    next_pos_y = start_y + dy
-    while is_on_board(values2dim, next_pos_x, next_pos_y) and is_same(orig_value, values2dim[next_pos_y][next_pos_x]):
-        length += 1
-        next_pos_x += dx
-        next_pos_y += dy
-        if length >= 3:
-            dirs_with_chains.append(current_dir)
+        dx, dy = current_dir.value
+        next_pos_x = start_x + dx
+        next_pos_y = start_y + dy
+        while is_on_board(values2dim, next_pos_x, next_pos_y) and is_same(orig_value, values2dim[next_pos_y][next_pos_x]):
+            length += 1
+            next_pos_x += dx
+            next_pos_y += dy
+            if length >= 3:
+                dirs_with_chains.append(current_dir)
     return dirs_with_chains
 
 
@@ -133,10 +133,21 @@ def mark_chains_for_removal(values, start_x, start_y, dirs_with_chains):
         next_x = start_x
         next_y = start_y
         while is_on_board(values, next_x, next_y) and is_same(orig_value, values[next_y][next_x]):
-            values[next_y][next_x] = mark_chains_for_removal(orig_value)
+            values[next_y][next_x] = mark_element_for_removal(orig_value)
             next_x += dx
             next_y += dy
 
 
 def mark_element_for_removal(value):
     return -value if value > 0 else value
+
+def test_erase_chains():
+    values2dim = [[1,1,1,2,4,4,3],
+                  [1,1,3,4,2,4,3],
+                  [1,3,1,1,2,2,3]]
+    deleted = erase_chains(values2dim)
+    expected_board = [[0,0,0,0,4,4,0],
+                      [0,0,3,4,0,4,0],
+                      [0,3,0,1,2,0,0]]
+    assert deleted is True
+    assert values2dim == expected_board
