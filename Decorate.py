@@ -1,11 +1,47 @@
-def pascal_memo(n):
+def calc_pascal(row, col):
+    if row == 1 and col == 1:
+        return 1
+    if col == 1 or col == row:
+        return 1
+    return calc_pascal(row - 1, col) + calc_pascal(row - 1, col - 1)
 
 
+def print_pascal(n):
+    for row in range(1, n + 1):
+        for col in range(1, row + 1):
+            print(calc_pascal(row, col), end=' ')
+
+        print()
 
 
+def calc_pascal_memoized(row, col):
+    return calc_pascal_helper(row, col, {})
 
 
-print(pascal_memo(4))
+def calc_pascal_helper(row, col, lookup_table):
+    key = (row, col)
+    result = 0
+    if key in lookup_table:
+        return lookup_table[key]
+    if row == 1 and col == 1:
+        return 1
+    if col == 1 or col == row:
+        return 1
+    else:
+        result = calc_pascal_helper(row - 1, col, lookup_table) + calc_pascal_helper(row - 1, col - 1, lookup_table)
+        lookup_table[key] = result
+    return result
+
+
+def print_pascal(n):
+    for row in range(1, n + 1):
+        for col in range(1, row + 1):
+            print(calc_pascal_memoized(row, col), end=' ')
+
+        print()
+
+
+print_pascal(5)
 
 
 def fibonacci(n):
