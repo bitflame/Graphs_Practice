@@ -16,5 +16,3 @@ def solve_tower_of_hanoi(n):
     print("Tower of Hanoi", n)
     move_tower(n, 'A', 'B', 'C')
 
-
-solve_tower_of_hanoi(3)
