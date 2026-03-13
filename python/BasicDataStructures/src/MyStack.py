@@ -17,6 +17,10 @@ class MyStack:
 
     def is_empty(self):
         return len(self.__values) == 0
+    def size(self):
+        return len(self.__values)
+    def get_at(self, pos):
+        return self.__values[pos]
 
 class StackIsEmptyException(Exception):
     pass
