@@ -1,4 +1,7 @@
+import functools
 import time
+
+from IsMagic import values
 
 
 def lcs(str1, str2):
@@ -74,11 +77,21 @@ def lcs_from_start(str1, str2):
     return lcs_from_start_helper(str1, str2, 0, 0, values)
 
 
+def decorate_lcs_from_front(func):
+    @functools.wraps(func)
+    def wrapper(str1, str2, pos1, pos2, values):
+        if pos1 >= len(str1) or pos2 >= len(str2):
+            return ""
+        if values[pos1][pos2] is not None:
+            return values[pos1][pos2]
+        result = func(str1, str2, pos1, pos2,values)
+        values[pos1][pos2] = result
+        return result
+    return wrapper
+
+
+@decorate_lcs_from_front
 def lcs_from_start_helper(str1, str2, pos1, pos2, values):
-    if pos1 >= len(str1) or pos2 >= len(str2):
-        return ""
-    if values[pos1][pos2] is not None:
-        return values[pos1][pos2]
     if str1[pos1] == str2[pos2]:
         return str1[pos1] + lcs_from_start_helper(str1, str2, pos1 + 1, pos2 + 1, values)
     else:
