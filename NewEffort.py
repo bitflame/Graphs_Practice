@@ -19,11 +19,26 @@ def puzzle_solver_helper(board, start_row, start_col):
             col = 0
             if row > 8:
                 return True
+    solved = True
+    for num in range(1, 10):
+        board[row][col] = num
+        if is_valid_position(board):
+
+
+def is_valid_position(board):
+    return check_horizontally(board) and check_vertically(board) and check_box(board)
 
 
 def remove_all_occurrences(values, val):
     return [value for value in values if value != val]
 
+
+def check_vertically(board):
+    for x in range(9):
+        col_values =[board[row][x] for row in range(9)]
+        if not all_desired_numbers(col_values):
+            return False
+    return True
 
 # checks every row for having desired values i.e. it checks every col for every row every time it is called
 def check_horizontally(values):
@@ -37,10 +52,11 @@ def check_horizontally(values):
 # checks all the numbers in a list for redundancy and they are within 0 and 9
 def all_desired_numbers(all_collected_values):
     relevant_values = list(all_collected_values)
-    relevant_values = remove_all_occurrences(relevant_values,0)
+    relevant_values = remove_all_occurrences(relevant_values, 0)
     value_set = set(relevant_values)
-    if len(value_set)!= len(relevant_values): return False
-    return value_set.issubset([1,2,3,4,5,6,7,8,9])
+    if len(value_set) != len(relevant_values): return False
+    return value_set.issubset([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
 
 # 0 represents a blank spot
 def create_sudoku_board():
