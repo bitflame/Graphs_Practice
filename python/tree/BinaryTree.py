@@ -21,8 +21,15 @@ def insert(current_node, value):
         current_node.right = insert(current_node.right, value)
     return current_node
 
+def print_existing_tree(current_node):
+    if current_node.left is not None:
+        print_existing_tree(current_node.left)
+    print(current_node.item,end=' ')
+    if current_node.right is not None:
+        print_existing_tree(current_node.right)
+
 _3 = BinaryTreeNode(3)
 insert(_3,3)
 insert(_3, 1)
 insert(_3, 4)
-print(_3.item)
+print_existing_tree(_3)
