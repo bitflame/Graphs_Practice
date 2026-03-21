@@ -21,6 +21,7 @@ def insert(current_node, value):
     return current_node
 
 
+# prints tree using in-order
 def print_existing_tree(current_node):
     if current_node.left is not None:
         print_existing_tree(current_node.left)
@@ -28,6 +29,29 @@ def print_existing_tree(current_node):
     if current_node.right is not None:
         print_existing_tree(current_node.right)
 
+
+def preorder(node):
+    if node is None:
+        return
+    print(node.item, end=' ')
+    preorder(node.left)
+    preorder(node.right)
+
+
+def inorder(node):
+    if node is None:
+        return
+    inorder(node.left)
+    print(node.item)
+    inorder(node.right)
+
+
+def postorder(node):
+    if node is None:
+        return
+    postorder(node.left)
+    postorder(node.right)
+    print(node.item)
 
 
 _3 = BinaryTreeNode(3)
@@ -37,3 +61,4 @@ insert(_3, 4)
 print_existing_tree(_3)
 print('\nTree contains 2? ', find(_3, 2))
 print('\nTree contains 13? ', find(_3, 13))
+preorder(_3)
