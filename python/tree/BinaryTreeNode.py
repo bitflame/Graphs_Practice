@@ -8,5 +8,5 @@ class BinaryTreeNode:
         return self.left is None and self.right is None
 
     def __str__(self):
-        return "BinaryTreeNode [item=%s, left=%s, right=%s]" % self.item, self.left, self.right
+        return "BinaryTreeNode [item=%s, left=%s, right=%s]" % (self.item, self.left, self.right)
 
