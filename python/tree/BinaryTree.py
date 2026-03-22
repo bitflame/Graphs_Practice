@@ -1,7 +1,8 @@
-from sys import hash_info
+import datetime
 
 from BasicDataStructures.src.MyQueue import Queue
 from BinaryTreeNode import BinaryTreeNode
+from Sandbox import Stack
 
 
 def find(start_node, search_for):
@@ -24,7 +25,7 @@ def insert(current_node, value):
     return current_node
 
 
-# prints tree using pre-order
+# prints tree using level-order
 def print_existing_tree(current_node):
     if current_node is None:
         return
@@ -185,13 +186,13 @@ def postorder(node):
     print(node.item)
 
 
-_3 = BinaryTreeNode(3)
-insert(_3, 3)
-insert(_3, 2)
-insert(_3, 4)
+# _3 = BinaryTreeNode(3)
+# insert(_3, 3)
+# insert(_3, 2)
+# insert(_3, 4)
 # print_existing_tree(_3)
-print('\nTree contains 2? ', find(_3, 2))
-print('\nTree contains 13? ', find(_3, 13), '\n')
+# print('\nTree contains 2? ', find(_3, 2))
+# print('\nTree contains 13? ', find(_3, 13), '\n')
 
 
 # preorder(_3)
@@ -213,4 +214,86 @@ def create_example_tree():
     return d4
 
 
-print_existing_tree(create_example_tree())
+def create_number_tree():
+    _4 = BinaryTreeNode("4")
+    insert(_4, "2")
+    insert(_4, "1")
+    insert(_4, "3")
+    insert(_4, "6")
+    insert(_4, "5")
+    insert(_4, "7")
+    return _4
+
+
+# print("Printing the example tree")
+# print_existing_tree(create_example_tree())
+now = datetime.datetime.now()
+print(now)
+formated = now.strftime("%Y-%m-%d %H:%M:%S")
+print("Today's date and time - nice format: ", formated)
+print(f"Today's date is: {datetime.date.today()}")
+print(f"Today's date is: {datetime.date.today()}")
+print_existing_tree(create_number_tree())
+
+
+def create_integer_number_tree():
+    _4 = BinaryTreeNode(4)
+    insert(_4, 2)
+    insert(_4, 1)
+    insert(_4, 3)
+    insert(_4, 6)
+    insert(_4, 5)
+    insert(_4, 7)
+    return _4
+
+
+print_existing_tree(create_integer_number_tree())
+
+
+# return a list of tree items according to in-order
+def to_list(node):
+    if node is None:
+        return []
+    aux = Stack()
+    aux.push(node)
+    result = []
+    while True:
+        while node.left is not None:
+            node = node.left
+            aux.push(node)
+        if aux.isEmpty():
+            break
+        node = aux.pop()
+        result.append(node.item)
+        while (not aux.isEmpty()) and node.right is None:
+            node = aux.pop()
+            result.append(node.item)
+        if aux.isEmpty() and node.right is None: break
+        node = node.right
+        aux.push(node)
+    return result
+
+
+_a = BinaryTreeNode('a')
+_b = BinaryTreeNode('b')
+_c = BinaryTreeNode('c')
+_d = BinaryTreeNode('d')
+_h = BinaryTreeNode('h')
+_i = BinaryTreeNode('i')
+_e = BinaryTreeNode('e')
+_j = BinaryTreeNode('j')
+_f = BinaryTreeNode('f')
+_k = BinaryTreeNode('k')
+_g = BinaryTreeNode('g')
+_a.left = _b
+_a.right = _c
+_b.left = _d
+_b.right = _e
+_d.left = _h
+_e.left = _i
+_e.right = _j
+_c.left = _f
+_f.right = _k
+_c.right = _g
+
+print(to_list(_a))

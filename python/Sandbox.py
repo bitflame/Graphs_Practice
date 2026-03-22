@@ -15,8 +15,9 @@ class Stack:
         print(self.values)
 
     def pop(self):
-        # self.values = self.values[1:]
-        return self.values.pop()
+        temp = self.values[0]
+        self.values = self.values[1:]
+        return temp
 
     def peek(self):
         return self.values[0]
