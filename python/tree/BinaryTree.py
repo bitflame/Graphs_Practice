@@ -300,7 +300,7 @@ print(to_list(_a))
 print(to_list(create_example_tree()))
 
 
-# in-order traversal
+# in-order traversal optimal version
 def to_list_update(start_node):
     if start_node is None:
         return []
