@@ -297,3 +297,43 @@ _f.right = _k
 _c.right = _g
 
 print(to_list(_a))
+print(to_list(create_example_tree()))
+
+
+# in-order traversal
+def to_list_update(start_node):
+    if start_node is None:
+        return []
+    result = []
+    result += to_list_update(start_node.left)
+    result.append(start_node.item)
+    result += to_list_update(start_node.right)
+    return result
+
+
+to_list_update(create_example_tree())
+
+
+def to_list_preorder(start_node):
+    if start_node is None:
+        return []
+    result = []
+    result.append(start_node.item)
+    result += to_list_preorder(start_node.left)
+    result += to_list_preorder(start_node.right)
+    return result
+
+
+print(to_list_preorder(create_example_tree()))
+
+
+def to_list_postorder(start_node):
+    if start_node is None:
+        return []
+    result = []
+    result += to_list_postorder(start_node.left)
+    result += to_list_postorder(start_node.right)
+    result.append(start_node.item)
+    return result
+
+print(to_list_postorder(create_example_tree()))
