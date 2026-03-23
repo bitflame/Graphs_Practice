@@ -336,4 +336,35 @@ def to_list_postorder(start_node):
     result.append(start_node.item)
     return result
 
+
 print(to_list_postorder(create_example_tree()))
+
+
+#################8.3.2 Inorder, Preorder, and Postorder iterative
+def inorder_iterative(start_node):
+    if start_node is None:
+        return []
+    aux = Stack()
+    result = []
+    while start_node.left is not None:
+        aux.push(start_node)
+        start_node = start_node.left
+    result.append(start_node.item)
+    while not aux.isEmpty():
+        node = aux.pop()
+        if node.right is not None:
+            result.append(node.item)
+            temp = node.right
+            if temp.left is not None:
+                aux.push(temp)
+                while temp.left is not None:
+                    aux.push(temp.left)
+                    temp = temp.left
+            else:
+                result.append(temp.item)
+                continue
+        else: result.append(node.item)
+    return result
+
+
+print(inorder_iterative(create_example_tree()))
