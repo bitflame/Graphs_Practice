@@ -1,4 +1,5 @@
 import datetime
+from enum import Enum, auto
 
 from BasicDataStructures.src.MyQueue import Queue
 from BinaryTreeNode import BinaryTreeNode
@@ -363,8 +364,115 @@ def inorder_iterative(start_node):
             else:
                 result.append(temp.item)
                 continue
-        else: result.append(node.item)
+        else:
+            result.append(node.item)
     return result
 
 
 print(inorder_iterative(create_example_tree()))
+
+
+def post_order_list(start_node):
+    nodes_to_process = Stack()
+    current_node = start_node
+    last_visited_node = None
+    result = []
+    while current_node is not None or (not nodes_to_process.isEmpty()):
+        if current_node is not None:
+            nodes_to_process.push(current_node)
+            current_node = current_node.left
+        else:
+            peek_node = nodes_to_process.peek()
+            if peek_node.right is not None and last_visited_node != peek_node.right:
+                current_node = peek_node.right
+            else:
+                last_visited_node = nodes_to_process.pop()
+                result.append(last_visited_node.item)
+                # action(last_visited_node.item)
+    return result
+
+
+print("result of postorder_iterative: ", post_order_list(create_example_tree()))
+
+
+def inorder_iterative(start_node):
+    nodes_to_process = Stack()
+    current_node = start_node
+    result = []
+    while current_node is not None or (not nodes_to_process.isEmpty()):
+        if current_node is not None:
+            nodes_to_process.push(current_node)
+            current_node = current_node.left
+        else:
+            current_node = nodes_to_process.pop()
+            result.append(current_node.item)
+            current_node = current_node.right
+    return result
+
+
+print("result of inorder_iterative: ", inorder_iterative(create_example_tree()))
+
+
+def preorder_iterative(start_node):
+    if start_node is None:
+        return []
+    result = []
+    nodes_to_process = Stack()
+    nodes_to_process.push(start_node)
+    while (not nodes_to_process.isEmpty()) or current_node is not None:
+        current_node = nodes_to_process.pop()
+        if current_node is not None:
+            result.append(current_node.item)
+            nodes_to_process.push(current_node.right)
+            nodes_to_process.push(current_node.left)
+    return result
+
+
+print("result of preorder_iterative: ", preorder_iterative(create_example_tree()))
+
+
+def inoder_iterative_v2(root):
+    stack = Stack()
+    stack.push(root)
+    result = []
+    while not stack.isEmpty():
+        current_node = stack.pop()
+        if not current_node is None:
+            if current_node.is_leaf():
+                result.append(current_node.item)
+                # print(current_node.item,end=' ')
+            else:
+                stack.push(current_node.right)
+                stack.push(BinaryTreeNode(current_node.item))
+                stack.push(current_node.left)
+    return result
+print("result of inorder_iterative: ", inoder_iterative_v2(create_example_tree()))
+
+# have not tested the code below.
+class Order(Enum):
+    PREORDER = auto()
+    INORDER = auto()
+    POSTORDER = auto()
+
+def traverse(root, order):
+    stack = Stack()
+    stack.push(root)
+    result = []
+    while not stack.isEmpty():
+        current_node = stack.pop()
+        if not current_node is None:
+            if current_node.is_leaf():
+                # print(current_node.item, end=' ')
+                result.append(current_node.item)
+            else:
+                if order == Order.POSTORDER:
+                    stack.push(BinaryTreeNode(current_node.item))
+                stack.push(current_node.right)
+                if order == Order.INORDER:
+                    Stack.push(BinaryTreeNode(current_node.item))
+                stack.push(current_node.left)
+                if order == Order.PREORDER:
+                    stack.push(BinaryTreeNode(current_node.item))
+    return result
+
+
