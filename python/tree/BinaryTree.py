@@ -492,6 +492,35 @@ def tree_height(root):
 print("Exercise 3 of chapter 8: Tree Height: ", get_height(create_example_tree()))
 
 
-# method that returns the lowest common ancestor of a node
+# method that returns the lowest common ancestor of a node by me
 def find_lca(start_node, value1, value2):
-    pass
+    if start_node is None:
+        return -1
+    current_value = start_node.item
+    if value1>current_value and value2 > current_value:
+        return find_lca(start_node.right, value1, value2)
+    if value1 < current_value and value2 < current_value:
+        return find_lca(start_node.left, value1, value2)
+    return start_node.item
+
+
+def make_lca_example():
+    _6 = BinaryTreeNode(6)
+    _4 = BinaryTreeNode(4)
+    _7 = BinaryTreeNode(7)
+    _2 = BinaryTreeNode(2)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _6.left = _4
+    _6.right = _7
+    _4.right = _5
+    _4.left = _2
+    _2.left = _1
+    _2.right = _3
+    return _6
+
+
+bin_tree_root = make_lca_example()
+print("lca of 1 and 5; expected answer: 4, actual answer: ", find_lca(bin_tree_root, 5, 1))
+print("lca of 1 and 5; expected answer: 4, actual answer: ", find_lca(bin_tree_root, 1, 5))
