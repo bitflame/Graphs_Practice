@@ -18,6 +18,10 @@ class Queue:
     def is_empty(self):
         return len(self.values) == 0
 
+    def size(self):
+        return len(self.values)
+
+
 class QueueIsEmptyException(Exception):
     pass
 

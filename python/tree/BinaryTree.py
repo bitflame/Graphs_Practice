@@ -497,7 +497,7 @@ def find_lca(start_node, value1, value2):
     if start_node is None:
         return -1
     current_value = start_node.item
-    if value1>current_value and value2 > current_value:
+    if value1 > current_value and value2 > current_value:
         return find_lca(start_node.right, value1, value2)
     if value1 < current_value and value2 < current_value:
         return find_lca(start_node.left, value1, value2)
@@ -522,5 +522,135 @@ def make_lca_example():
 
 
 bin_tree_root = make_lca_example()
+print_existing_tree(bin_tree_root)
 print("lca of 1 and 5; expected answer: 4, actual answer: ", find_lca(bin_tree_root, 5, 1))
 print("lca of 1 and 5; expected answer: 4, actual answer: ", find_lca(bin_tree_root, 1, 5))
+
+
+def make_char_tree():
+    # makes MICHAEL
+    root = BinaryTreeNode('M')
+    root.left = BinaryTreeNode('I')
+    root.right = BinaryTreeNode('C')
+    root.left.left = BinaryTreeNode('H')
+    root.left.right = BinaryTreeNode('A')
+    root.right.left = BinaryTreeNode('E')
+    root.right.right = BinaryTreeNode('L')
+    return root
+
+
+def make_int_tree():
+    root = BinaryTreeNode(1)
+    root.left = BinaryTreeNode(2)
+    root.right = BinaryTreeNode(3)
+    root.left.left = BinaryTreeNode(4)
+    root.left.right = BinaryTreeNode(5)
+    root.right.left = BinaryTreeNode(6)
+    root.right.right = BinaryTreeNode(7)
+    return root
+
+
+def level_order(start_node):
+    if start_node is None:
+        return []
+    to_process = Queue()
+    to_process.enqueue(start_node)
+    result = []
+    while not to_process.is_empty():
+        current = to_process.dequeue()
+        if current is not None:
+            result.append(current.item)
+            to_process.enqueue(current.left)
+            to_process.enqueue(current.right)
+    return result
+
+
+root = make_int_tree()
+print_existing_tree(root)
+print(level_order(root))
+
+
+def level_order_rec(start_node, to_process):
+    if start_node is None:
+        return []
+    to_process = Queue()
+    to_process.enqueue(start_node)
+    result = []
+    while not to_process.is_empty():
+        current = to_process.dequeue()
+        if current is not None:
+            result.append(current.item)
+            to_process.enqueue(current.left)
+            to_process.enqueue(current.right)
+    return result
+
+
+print(level_order_rec(root, None))
+
+
+def level_sum(start_node):
+    if start_node is None:
+        return 0
+    to_process = Queue()
+    to_process.enqueue(start_node)
+    result = []
+    level, sum = 0, 0
+    while not to_process.is_empty():
+        for i in range(to_process.size()):
+            if to_process.is_empty(): break
+            current_node = to_process.dequeue()
+            sum += current_node.item
+            if current_node.left is not None:
+                to_process.enqueue(current_node.left)
+            if current_node.right is not None:
+                to_process.enqueue(current_node.right)
+        result.append((level, sum))
+        sum = 0
+        level += 1
+    return result
+
+
+def level_sum_inden(start_node):
+    if start_node is None:
+        return {}
+    result = {}
+    to_process = Queue()
+    to_process.enqueue((start_node, 0))
+    while not to_process.is_empty():
+        current_node_and_level = to_process.dequeue()
+        current_node = current_node_and_level[0]
+        level = current_node_and_level[1]
+        if level not in result:
+            result[level] = 0
+        result[level] += current_node.item
+        if current_node.left is not None:
+            to_process.enqueue((current_node.left, level + 1))
+        if current_node.right is not None:
+            to_process.enqueue((current_node.right, level + 1))
+    return result
+
+
+def make_tree_level_sum():
+    _4 = BinaryTreeNode(4)
+    _2 = BinaryTreeNode(2)
+    _6 = BinaryTreeNode(6)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _8 = BinaryTreeNode(8)
+    _7 = BinaryTreeNode(7)
+    _9 = BinaryTreeNode(9)
+    _4.left = _2
+    _4.right = _6
+    _2.left = _1
+    _2.right = _3
+    _6.left = _5
+    _6.right = _8
+    _8.left = _7
+    _8.right = _9
+    return _4
+
+
+root = make_tree_level_sum()
+print(level_sum(root))
+print(level_sum_inden(root))
