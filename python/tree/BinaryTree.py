@@ -446,13 +446,17 @@ def inoder_iterative_v2(root):
                 stack.push(BinaryTreeNode(current_node.item))
                 stack.push(current_node.left)
     return result
+
+
 print("result of inorder_iterative: ", inoder_iterative_v2(create_example_tree()))
+
 
 # have not tested the code below.
 class Order(Enum):
     PREORDER = auto()
     INORDER = auto()
     POSTORDER = auto()
+
 
 def traverse(root, order):
     stack = Stack()
@@ -476,3 +480,18 @@ def traverse(root, order):
     return result
 
 
+# This method also works for branch heights, not just root
+def tree_height(root):
+    if root is None:
+        return 0
+    left_height = tree_height(root.left)
+    right_height = tree_height(root.right)
+    return 1 + max(left_height, right_height)
+
+
+print("Exercise 3 of chapter 8: Tree Height: ", get_height(create_example_tree()))
+
+
+# method that returns the lowest common ancestor of a node
+def find_lca(start_node, value1, value2):
+    pass
