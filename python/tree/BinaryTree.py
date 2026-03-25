@@ -761,4 +761,5 @@ def reconstruct_from_preorder_bst(preorder_values):
     root.right = reconstruct_from_preorder_bst(right_values)
     return root
 
+print_existing_tree(reconstruct_from_preorder_bst(list_one_preorder))
 
