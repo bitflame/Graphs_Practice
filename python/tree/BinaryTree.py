@@ -939,8 +939,55 @@ def invert(root):
     return root
 
 
+def invert_clearer(root):
+    if root is None:
+        return None
+    root.left, root.right = invert_clearer(root.right), invert_clearer(root.left)
+    return root
+
+
 print('Here is the symmetric root: ')
 print_existing_tree(symmetric_root)
 
 print('Here is the mirror image of symmetric root:')
 print_existing_tree(invert(symmetric_root))
+print('Here is the output of invert_clearer: ')
+print_existing_tree(invert_clearer(symmetric_root))
+
+
+#################################check binary search exercise################################
+def is_bst(node):
+    if node is None:
+        return True
+    if node.is_leaf():
+        return True
+    if node.left.item > node.right.item:
+        return False
+    else:
+        return is_bst(node.left) and is_bst(node.right)
+
+
+def is_bst_book(node):
+    if node is None:
+        return True
+    if node.is_leaf():
+        return True
+    is_left_bst = True
+    is_right_bst = True
+    is_left_bst = is_bst_book(node.left) and node.left.item < node.item
+    is_right_bst = is_bst_book(node.right) and node.right.item > node.item
+    return is_left_bst and is_right_bst
+
+
+def is_bst_latest(node, min_val=float('-inf'), max_val=float('inf')):
+    if node is None:
+        return True
+    if not min_val < node.item < max_val:
+        return False
+    return is_bst_latest(node.left, min_val, node.item) and is_bst_latest(node.right, node.item, max_val)
+root = make_tree_level_sum()
+print_existing_tree(root)
+print(is_bst_latest(root))
+root = make_int_tree()
+print_existing_tree(root)
+print(is_bst_latest(root))
