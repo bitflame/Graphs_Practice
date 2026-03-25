@@ -713,41 +713,48 @@ def construction(values):
     mid_idx = len(values) // 2
     mid_value = values[mid_idx]
     new_node = BinaryTreeNode(mid_value)
-    if len(values)==1:
+    if len(values) == 1:
         return new_node
     new_node.left = construction(values[0:mid_idx])
     # can't say [mid_idx+1:] because length of values changes
     new_node.right = construction(values[mid_idx + 1:len(values)])
     return new_node
-list_one = [1,2,3,4,5,6,7]
-list_tow = [1,2,3,4,5,6,7,8]
+
+
+list_one = [1, 2, 3, 4, 5, 6, 7]
+list_tow = [1, 2, 3, 4, 5, 6, 7, 8]
 print('Here is list_one in Tree form: ')
 print_existing_tree(construction(list_one))
 print('Here is list_two in Tree form: ')
 print_existing_tree(construction(list_one))
 ###########################
-list_one_preorder = [4,2,1,3,6,5,7]
-list_one_inorder = [1,2,3,4,5,6,7]
+list_one_preorder = [4, 2, 1, 3, 6, 5, 7]
+list_one_inorder = [1, 2, 3, 4, 5, 6, 7]
+
+
 def reconstruct_clearer(preorder_values, inorder_values):
     if not preorder_values or not inorder_values:
         return None
     root_value = preorder_values[0]
     root = BinaryTreeNode(root_value)
-    if len(preorder_values)==1 and len(inorder_values)==1:
+    if len(preorder_values) == 1 and len(inorder_values) == 1:
         return root
     index = inorder_values.index(root_value)
     left_inorder = inorder_values[0:index]
-    #todo -- why not inorder_values[index+1:]? test it later
+    # todo -- why not inorder_values[index+1:]? test it later
     # right_inorder = inorder_values[index+1:]
-    right_inorder = inorder_values[index+1:len(inorder_values)]
-    left_preorder = preorder_values[1:1+index]
-    right_preorder = preorder_values[1+index:]
+    right_inorder = inorder_values[index + 1:len(inorder_values)]
+    left_preorder = preorder_values[1:1 + index]
+    right_preorder = preorder_values[1 + index:]
     # right_preorder = preorder_values[1+index:len(preorder_values)]
-    root.left = reconstruct_clearer(left_preorder,left_inorder )
+    root.left = reconstruct_clearer(left_preorder, left_inorder)
     root.right = reconstruct_clearer(right_preorder, right_inorder)
     return root
 
+
 print_existing_tree(reconstruct_clearer(list_one_preorder, list_one_inorder))
+
+
 ##################### a very interesting algorithm using python list comprehension
 def reconstruct_from_preorder_bst(preorder_values):
     if not preorder_values:
@@ -761,5 +768,92 @@ def reconstruct_from_preorder_bst(preorder_values):
     root.right = reconstruct_from_preorder_bst(right_values)
     return root
 
+
 print_existing_tree(reconstruct_from_preorder_bst(list_one_preorder))
 
+
+################################Exercise Nine###################################
+def create_math_expression_tree():
+    _plus_sign = BinaryTreeNode('+')
+    _3 = BinaryTreeNode('3')
+    _mult_sign = BinaryTreeNode('*')
+    _7 = BinaryTreeNode('7')
+    _minus_sign = BinaryTreeNode('-')
+    second_7 = BinaryTreeNode('7')
+    _1 = BinaryTreeNode('1')
+    _plus_sign.left = _3
+    _plus_sign.right = _mult_sign
+    _mult_sign.left = _7
+    _mult_sign.right = _minus_sign
+    _minus_sign.left = second_7
+    _minus_sign.right = _1
+    return _plus_sign
+
+
+def math_operator(node):
+    if node is None:
+        return None
+    elif node.left is None and node.right is None:
+        return node.item
+    elif node.left is None:
+        return node.right
+    elif node.right is None:
+        return node.left
+    left_result = math_operator(node.left)
+    right_result = math_operator(node.right)
+    if left_result is not None and right_result is not None:
+        return apply_operation(left_result, node.item, right_result)
+    return None
+
+
+def apply_operation(left_result, operator, right_result):
+    if operator == '+':
+        return int(left_result) + int(right_result)
+    elif operator == '-':
+        return int(left_result) - int(right_result)
+    elif operator == '*':
+        return int(left_result) * int(right_result)
+    elif operator == '/':
+        return int(left_result) / int(right_result)
+    else:
+        raise ValueError(operator, ' is not supported.')
+
+
+# Here is how book did it...
+def evaluate(root):
+    value = root.item
+    if value == '+':
+        return evaluate(root.left) + evaluate(root.right)
+    elif value == '-':
+        return evaluate(root.left) - evaluate(root.right)
+    elif value == '*':
+        return evaluate(root.left) * evaluate(root.right)
+    elif value == '/':
+        return evaluate(root.left) / evaluate(root.right)
+    else:
+        return int(value)
+
+
+root = create_math_expression_tree()
+print('Here is what the math operations tree looks like: ')
+print_existing_tree(root)
+result = math_operator(root)
+print(result)
+
+result = evaluate(root)
+print("Here is the result of my copy of book's method")
+print(result)
+
+
+def evaluate_v2(node):
+    value = node.item
+    match value:
+        case "+" | "-" | "*" | "/":
+            val1 = evaluate_v2(node.left)
+            val2 = evaluate_v2(node.right)
+            return eval(str(val1) + value + str(val2))
+        case _:
+            return int(value)
+result = evaluate_v2(root)
+print("Here is the outcome of Evaluate Function - version two: ")
+print(result)
