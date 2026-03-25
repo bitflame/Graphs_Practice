@@ -1,5 +1,5 @@
 import datetime
-from enum import Enum, auto
+from enum import Enum, auto, nonmember
 
 from BasicDataStructures.src.MyQueue import Queue
 from BinaryTreeNode import BinaryTreeNode
@@ -748,3 +748,17 @@ def reconstruct_clearer(preorder_values, inorder_values):
     return root
 
 print_existing_tree(reconstruct_clearer(list_one_preorder, list_one_inorder))
+##################### a very interesting algorithm using python list comprehension
+def reconstruct_from_preorder_bst(preorder_values):
+    if not preorder_values:
+        return None
+    root_value = preorder_values[0]
+    root = BinaryTreeNode(root_value)
+    # spliting
+    left_values = [value for value in preorder_values if value < root_value]
+    right_values = [value for value in preorder_values if value > root_value]
+    root.left = reconstruct_from_preorder_bst(left_values)
+    root.right = reconstruct_from_preorder_bst(right_values)
+    return root
+
+
