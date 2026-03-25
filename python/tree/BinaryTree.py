@@ -1,5 +1,5 @@
 import datetime
-from enum import Enum, auto, nonmember
+from enum import Enum, auto
 
 from BasicDataStructures.src.MyQueue import Queue
 from BinaryTreeNode import BinaryTreeNode
@@ -854,6 +854,93 @@ def evaluate_v2(node):
             return eval(str(val1) + value + str(val2))
         case _:
             return int(value)
+
+
 result = evaluate_v2(root)
 print("Here is the outcome of Evaluate Function - version two: ")
 print(result)
+
+
+######################################################################
+# this tree passes the structural symmetry test but fails the value check
+def create_tree_for_symmetry():
+    _1 = BinaryTreeNode(1)
+    _2 = BinaryTreeNode(2)
+    _2_second = BinaryTreeNode(2)
+    _3 = BinaryTreeNode(3)
+    _3_second = BinaryTreeNode(4)
+    _1.left = _2
+    _1.right = _2_second
+    _2.left = _3
+    _2_second.right = _3_second
+    return _1
+
+
+symmetric_root = create_tree_for_symmetry()
+print_existing_tree(symmetric_root)
+
+
+def symmetry(node):
+    if node is None:
+        return True
+    return symmetry_helper(node.left, node.right)
+
+
+def symmetry_helper(left, right):
+    if left is None and right is None:
+        return True
+    if left is None or right is None:
+        return False
+    return symmetry_helper(left.left, right.right) and symmetry_helper(left.right, right.left)
+
+
+print(symmetry(symmetric_root))
+
+
+def symmetry_v2(node):
+    if node is None:
+        return True
+    return symmetry_helper_for_value(node.left, node.right, False)
+
+
+def symmetry_helper_for_value(left, right, check_value):
+    if left is None and right is None:
+        return True
+    if left is None or right is None:
+        return False
+    check_value = left.item == right.item
+    return check_value and symmetry_helper_for_value(left.left, right.right, check_value) and symmetry_helper_for_value(
+        left.right, right.left, check_value)
+
+
+print(symmetry_v2(symmetric_root))
+
+
+# this is books implementation of check value:
+def check_if_nodes_and_values_are_symmetric(left, right, check_value):
+    if left is None and right is None:
+        return True
+    if left is None or right is None:
+        return False
+    # check values
+    if check_value and not left.item == right.item:
+        return False
+    return (check_if_nodes_and_values_are_symmetric(left.right, right.left, check_value) and
+            check_if_nodes_and_values_are_symmetric(left.left, right.right, check_value))
+
+
+def invert(root):
+    if root is None:
+        return None
+    invert_left = invert(root.left)
+    invert_right = invert(root.right)
+    root.right = invert_left
+    root.left = invert_right
+    return root
+
+
+print('Here is the symmetric root: ')
+print_existing_tree(symmetric_root)
+
+print('Here is the mirror image of symmetric root:')
+print_existing_tree(invert(symmetric_root))
