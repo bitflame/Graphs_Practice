@@ -651,6 +651,100 @@ def make_tree_level_sum():
     return _4
 
 
+def level_sum_depth_first(root):
+    results = {}
+    traverse_depth_first(root, 0, results)
+    return dict(sorted(results.items()))
+
+
+def traverse_depth_first(current_node, level, results):
+    if current_node:
+        # preorder
+        traverse_depth_first(current_node.left, level + 1, results)
+        # inorder
+        results[level] = results.get(level, 0) + current_node.item
+        traverse_depth_first(current_node.right, level + 1, results)
+        # postorder
+
+
 root = make_tree_level_sum()
 print(level_sum(root))
 print(level_sum_inden(root))
+print(level_sum_depth_first(root))
+
+
+def rotate_left(node):
+    if node.right is None:
+        raise ValueError("Can't rotate left when root does not have a right child.")
+    rc = node.right
+    rlc = node.right.left
+    rc.left = node
+    node.right = rlc
+    return rc
+
+
+def rotate_right(node):
+    if node.left is None:
+        raise ValueError("Can't rotate right when root does not have a left child.")
+    lc = node.left
+    lrc = node.left.right
+    lc.right = node
+    node.left = lrc
+    return lc
+
+
+def main():
+    root = create_example_tree()
+    print_existing_tree(root)
+    print("\nRotate left")
+    left_rotated_root = rotate_left(root)
+    print_existing_tree(left_rotated_root)
+    print("\nRotate right")
+    right_rotated_root = rotate_right(rotate_right(left_rotated_root))
+    print_existing_tree(right_rotated_root)
+
+
+main()
+
+
+def construction(values):
+    if not values:
+        return None
+    mid_idx = len(values) // 2
+    mid_value = values[mid_idx]
+    new_node = BinaryTreeNode(mid_value)
+    if len(values)==1:
+        return new_node
+    new_node.left = construction(values[0:mid_idx])
+    # can't say [mid_idx+1:] because length of values changes
+    new_node.right = construction(values[mid_idx + 1:len(values)])
+    return new_node
+list_one = [1,2,3,4,5,6,7]
+list_tow = [1,2,3,4,5,6,7,8]
+print('Here is list_one in Tree form: ')
+print_existing_tree(construction(list_one))
+print('Here is list_two in Tree form: ')
+print_existing_tree(construction(list_one))
+###########################
+list_one_preorder = [4,2,1,3,6,5,7]
+list_one_inorder = [1,2,3,4,5,6,7]
+def reconstruct_clearer(preorder_values, inorder_values):
+    if not preorder_values or not inorder_values:
+        return None
+    root_value = preorder_values[0]
+    root = BinaryTreeNode(root_value)
+    if len(preorder_values)==1 and len(inorder_values)==1:
+        return root
+    index = inorder_values.index(root_value)
+    left_inorder = inorder_values[0:index]
+    #todo -- why not inorder_values[index+1:]? test it later
+    # right_inorder = inorder_values[index+1:]
+    right_inorder = inorder_values[index+1:len(inorder_values)]
+    left_preorder = preorder_values[1:1+index]
+    right_preorder = preorder_values[1+index:]
+    # right_preorder = preorder_values[1+index:len(preorder_values)]
+    root.left = reconstruct_clearer(left_preorder,left_inorder )
+    root.right = reconstruct_clearer(right_preorder, right_inorder)
+    return root
+
+print_existing_tree(reconstruct_clearer(list_one_preorder, list_one_inorder))
