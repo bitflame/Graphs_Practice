@@ -985,9 +985,52 @@ def is_bst_latest(node, min_val=float('-inf'), max_val=float('inf')):
     if not min_val < node.item < max_val:
         return False
     return is_bst_latest(node.left, min_val, node.item) and is_bst_latest(node.right, node.item, max_val)
+
+
 root = make_tree_level_sum()
 print_existing_tree(root)
 print(is_bst_latest(root))
 root = make_int_tree()
 print_existing_tree(root)
 print(is_bst_latest(root))
+
+
+#########################################completeness#######################################3
+def count_nodes(node):
+    if node is None:
+        return 0
+    return 1 + count_nodes(node.left) + count_nodes(node.right)
+
+
+def is_full(node):
+    if node is None:
+        return True
+    return is_full_helper(node.left, node.right)
+
+
+def is_full_helper(left_node, right_node):
+    if left_node is None and right_node is None:
+        return True
+    if left_node is not None and right_node is not None:
+        return is_full(left_node) and is_full(right_node)
+    return False
+
+
+def is_perfect(node):
+    if node is None:
+        return True
+    height = get_height(node)
+    return is_perfect_helper(node.left, node.right, height, 1)
+
+
+def is_perfect_helper(left_node, right_node, height, current_level):
+    if left_node is None or right_node is None:
+        return False
+    if left_node.is_leaf() and right_node.is_leaf():
+        return on_the_same_height(left_node, right_node, height, current_level)
+    return (is_perfect_helper(left_node.left, right_node.right, height, current_level + 1) and
+            is_perfect_helper(right_node.left, right_node.right, height, current_level + 1))
+
+
+def on_the_same_height(left_node, right_node, height, current_level):
+    return get_height(left_node) + current_level == height and get_height(right_node) + current_level == height
