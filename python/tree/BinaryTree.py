@@ -1174,3 +1174,46 @@ def create_incomplete_tree_v2():
 root = create_incomplete_tree_v2()
 print_existing_tree(root)
 print('Expecting this to be False: ', complete_tree(root))
+
+
+#######################################Completeness Books method##########################
+def levelorder_is_complete(start_node):
+    if start_node is None:
+        return False
+    to_process = Queue()
+    to_process.enqueue(start_node)
+    # indicates that a node does not have two successors
+    missing_node = False
+    while not to_process.is_empty():
+        current = to_process.dequeue()
+        # only descendants on the right side
+        if current.left is None and current.right is not None:
+            return False
+        # if a missing node was previously detected,
+        # then the next may be only a leaf
+        if missing_node and not current.is_leaf():
+            return False
+        # include sub-elements, mark if not complete
+        if current.left is not None:
+            to_process.enqueue(current.left)
+        else:
+            missing_node = True
+        if current.right is not None:
+            to_process.enqueue(current.right)
+        else:
+            missing_node = True
+    # all nodes succesfully tested
+    return True
+
+
+root = create_incomplete_tree_v2()
+print_existing_tree(root)
+print('Expected outcome:  False, actual outcome: ', levelorder_is_complete(root))
+
+root = create_incomplete_tree()
+print_existing_tree(root)
+print('Expected answer is False, actual answer: ', levelorder_is_complete(root))
+
+root = create_complete_tree()
+print_existing_tree(root)
+print('Expected answer is True, actual answer: ', complete_tree(root))
