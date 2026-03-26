@@ -1034,3 +1034,143 @@ def is_perfect_helper(left_node, right_node, height, current_level):
 
 def on_the_same_height(left_node, right_node, height, current_level):
     return get_height(left_node) + current_level == height and get_height(right_node) + current_level == height
+
+
+########################################################################################################
+
+
+def is_tree_perfect(node):
+    if node is None:
+        return True
+    height = get_height(node)
+    return perfect_helper(node.left, node.right, height, 1)
+
+
+def perfect_helper(left, right, height, level):
+    if left is None or right is None:
+        return False
+    if left.is_leaf() and right.is_leaf():
+        return on_same_height(left, right, height, level)
+    return perfect_helper(left.left, left.right, height, level + 1) and perfect_helper(right.left, right.right, height,
+                                                                                       level + 1)
+
+
+def on_same_height(left, right, height, current_level):
+    return current_level + get_height(left) == height and current_level + get_height(right) == height
+
+
+def make_tree_for_perfect():
+    _4 = BinaryTreeNode(4)
+    _2 = BinaryTreeNode(2)
+    _6 = BinaryTreeNode(6)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _7 = BinaryTreeNode(7)
+    _4.left = _2
+    _4.right = _6
+    _2.left = _1
+    _2.right = _3
+    _6.left = _5
+    _6.right = _7
+    return _4
+
+
+root = make_tree_for_perfect()
+print_existing_tree(root)
+print("#nodes: ", count_nodes(root))
+print("is full?:", is_full(root))
+print("is perfect?: ", is_tree_perfect(root))
+
+
+####################################################################Complete Tree
+def complete_tree(node):
+    if node is None:
+        return True
+    height = get_height(node)
+    return complete_tree_helper(node.left, node.right, height, 1)
+
+
+def complete_tree_helper(left, right, height, current_level):
+    if left is None and right is None:
+        return True
+    if left is None and right is not None:
+        return False
+    if (left.is_leaf() or right.is_leaf()) and height - current_level > 1:
+        return False
+    if left.is_leaf() and right.is_leaf():
+        return nodes_are_on_same_level(left, right, height, current_level)
+    return (complete_tree_helper(left.left, left.right, height, current_level + 1) and
+            complete_tree_helper(right.left, right.right, height, current_level + 1))
+
+
+def nodes_are_on_same_level(left, right, height, current_level):
+    return get_height(left) + current_level == height and get_height(right) + current_level == height
+
+
+def create_complete_tree():
+    _4 = BinaryTreeNode(4)
+    _2 = BinaryTreeNode(2)
+    _6 = BinaryTreeNode(6)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _7 = BinaryTreeNode(7)
+    _4.left = _2
+    _4.right = _6
+    _2.left = _1
+    _2.right = _3
+    _6.left = _5
+    _6.right = _7
+    return _4
+
+
+root = create_complete_tree()
+print_existing_tree(root)
+print('Expected answer is True, actual answer: ', complete_tree(root))
+
+
+def create_incomplete_tree():
+    _4 = BinaryTreeNode(4)
+    _2 = BinaryTreeNode(2)
+    _6 = BinaryTreeNode(6)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _7 = BinaryTreeNode(7)
+    _4.left = _2
+    _4.right = _6
+    _2.left = _1
+    _2.right = _3
+    # _6.left = _5
+    _6.right = _7
+    return _4
+
+
+root = create_incomplete_tree()
+print_existing_tree(root)
+print('Expected answer is False, actual answer: ', complete_tree(root))
+
+
+def create_incomplete_tree_v2():
+    _4 = BinaryTreeNode(4)
+    _2 = BinaryTreeNode(2)
+    _6 = BinaryTreeNode(6)
+    _1 = BinaryTreeNode(1)
+    _3 = BinaryTreeNode(3)
+    _5 = BinaryTreeNode(5)
+    _7 = BinaryTreeNode(7)
+    _4.left = _2
+    _4.right = _6
+    _2.left = _1
+    _2.right = _3
+    # _6.left = _5
+    # _6.right = _7
+    _1.left = _5
+    _1.right = _7
+    return _4
+
+
+root = create_incomplete_tree_v2()
+print_existing_tree(root)
+print('Expecting this to be False: ', complete_tree(root))
