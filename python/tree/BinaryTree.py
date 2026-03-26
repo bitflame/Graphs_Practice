@@ -1176,7 +1176,7 @@ print_existing_tree(root)
 print('Expecting this to be False: ', complete_tree(root))
 
 
-#######################################Completeness Books method##########################
+#######################################Completeness Books method - using a flag ##########################
 def levelorder_is_complete(start_node):
     if start_node is None:
         return False
@@ -1217,3 +1217,72 @@ print('Expected answer is False, actual answer: ', levelorder_is_complete(root))
 root = create_complete_tree()
 print_existing_tree(root)
 print('Expected answer is True, actual answer: ', complete_tree(root))
+
+
+##########################Completeness Book's method using an array################################
+def is_complete(start_node):
+    node_count = count_nodes(start_node)
+    node_exists = [False] * node_count
+    # now you traverse the tree from the root downwards
+    traverse_and_mark(start_node, node_exists, 0)
+    return all_assigned(node_exists)
+
+
+def traverse_and_mark(start_node, node_exists, pos):
+    # recursive termination
+    if start_node is None:
+        return
+    if pos >= len(node_exists):
+        return
+        # action
+    node_exists[pos] = True
+    # recursive descent
+    traverse_and_mark(start_node.left, node_exists, pos * 2 + 1)
+    traverse_and_mark(start_node.right, node_exists, pos * 2 + 2)
+
+
+def all_assigned(node_exists):
+    # This is the more clear version of the oneliner below...
+    for exists in node_exists:
+        if not exists:
+            return False
+    return True
+    # return all(node_exists)
+
+
+root = create_incomplete_tree_v2()
+print_existing_tree(root)
+print('Expected outcome:  False, actual outcome: ', is_complete(root))
+
+root = create_incomplete_tree()
+print_existing_tree(root)
+print('Expected answer is False, actual answer: ', is_complete(root))
+
+root = create_complete_tree()
+print_existing_tree(root)
+print('Expected answer is True, actual answer: ', is_complete(root))
+##########Completeness Book's method using a recursive strategy to avoid the array###############
+def is_complete_rec(start_node):
+    return is_complete_rec_helper(start_node, 0, count_nodes(start_node))
+
+def is_complete_rec_helper(start_node, pos, node_count):
+    if start_node is None:
+        return True
+    if pos >= node_count:
+        return False
+    if not is_complete_rec_helper(start_node.left,2*pos+1,node_count):
+        return False
+    if not is_complete_rec_helper(start_node.right,pos*2+2,node_count):
+        return False
+    return True
+root = create_incomplete_tree_v2()
+print_existing_tree(root)
+print('Expected outcome:  False, actual outcome: ', is_complete_rec(root))
+
+root = create_incomplete_tree()
+print_existing_tree(root)
+print('Expected answer is False, actual answer: ', is_complete_rec(root))
+
+root = create_complete_tree()
+print_existing_tree(root)
+print('Expected answer is True, actual answer: ', is_complete_rec(root))
