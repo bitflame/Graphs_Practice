@@ -110,11 +110,39 @@ print(my_test_list)
 print("result of merge sort with insertion sort: ", quick_sort(my_test_list))
 
 
+def binary_search(values, target, low, hi=None):
+    if hi is None:
+        hi = len(values)-1
+    if low > hi:
+        return -1
+    mid = (hi + low) // 2
+    if values[mid] == target:
+        return mid
+    elif values[mid] > target:
+        return binary_search(values, target, low, mid - 1)
+    elif values[mid] < target:
+        return binary_search(values, target, mid + 1, hi)
+    return None
+
+
 def contains_all(values, search_values):
     pass
 
 
 values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+print('looking for 15 in array of 0 to 10 expected value: -1, actual value: ', binary_search(values, 15, 0))
+print('looking for -1 in array of 0 to 10 expected value: -1, actual value: ', binary_search(values, -1, 0))
+print('looking for 0 in array of 0 to 10 expected value: 0, actual value: ', binary_search(values, 0, 0))
+print('looking for 1 in array of 0 to 10 expected value: 1, actual value: ', binary_search(values, 1, 0))
+print('looking for 2 in array of 0 to 10 expected value: 2, actual value: ', binary_search(values, 2, 0))
+print('looking for 3 in array of 0 to 10 expected value: 3, actual value: ', binary_search(values, 3, 0))
+print('looking for 4 in array of 0 to 10 expected value: 4, actual value: ', binary_search(values, 4, 0))
+print('looking for 5 in array of 0 to 10 expected value: 5, actual value: ', binary_search(values, 5, 0))
+print('looking for 6 in array of 0 to 10 expected value: 6, actual value: ', binary_search(values, 6, 0))
+print('looking for 7 in array of 0 to 10 expected value: 7, actual value: ', binary_search(values, 7, 0))
+print('looking for 8 in array of 0 to 10 expected value: 8, actual value: ', binary_search(values, 8, 0))
+print('looking for 9 in array of 0 to 10 expected value: 9, actual value: ', binary_search(values, 9, 0))
+
 search_values = [7, 2]
 
 print('values: ', values)
