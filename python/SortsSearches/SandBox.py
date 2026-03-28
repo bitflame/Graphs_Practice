@@ -1,0 +1,122 @@
+def insertion_sort(values):
+    for current_pos in range(1, len(values)):
+        current_val = values[current_pos]
+        insertion_pos = find_insert_pos_from_current(values, current_pos)
+        move_right(values, current_pos, insertion_pos)
+        values[insertion_pos] = current_val
+    return values
+
+
+def move_right(values, current_pos, insert_pos):
+    mov_pos = current_pos
+    while insert_pos < mov_pos:
+        values[mov_pos] = values[mov_pos - 1]
+        mov_pos -= 1
+
+
+def find_insert_pos_from_current(values, current_pos):
+    insert_pos = current_pos
+    while values[current_pos] < values[insert_pos - 1] and insert_pos > 0:
+        insert_pos -= 1
+    return insert_pos
+
+
+my_test_list = [4, 2, 7, 9, 1]
+print(insertion_sort(my_test_list))
+
+
+def selection_sort(values):
+    for i in range(len(values)):
+        min_idx = i
+        for j in range(i + 1, len(values)):
+            if values[j] < values[min_idx]:
+                min_idx = j
+        tmp = values[i]
+        values[i] = values[min_idx]
+        values[min_idx] = tmp
+    return values
+
+
+my_test_list = [4, 2, 7, 9, 1]
+print(my_test_list)
+print(insertion_sort(my_test_list))
+
+
+def merge_sort(to_sort):
+    if len(to_sort) <= 1:
+        return to_sort
+    mid_pos = len(to_sort) // 2
+    left = to_sort[0:mid_pos]
+    result_left = merge_sort(left)
+    right = to_sort[mid_pos:len(to_sort)]
+    result_right = merge_sort(right)
+    return merge(result_left, result_right)
+
+
+def merge(left, right):
+    result = []
+    pos1, pos2 = 0, 0
+    while pos1 < len(left) and pos2 < len(right):
+        if left[pos1] < right[pos2]:
+            result.append(left[pos1])
+            pos1 += 1
+        else:
+            result.append(right[pos2])
+            pos2 += 1
+    add_remaining(result, left, pos1)
+    add_remaining(result, right, pos2)
+    return result
+
+
+def add_remaining(result, values, idx):
+    result += values[idx:]
+
+
+my_test_list = [4, 2, 7, 9, 1]
+print(my_test_list)
+print("result of merge sort: ", merge_sort(my_test_list))
+
+
+def merge_sort_with_insertion_sort(to_sort):
+    if len(to_sort) < 5:
+        insertion_sort(to_sort)
+        return to_sort
+    mid_pos = len(to_sort) // 2
+    left = to_sort[0:mid_pos]
+    result_left = merge_sort(left)
+    right = to_sort[mid_pos:len(to_sort)]
+    result_right = merge_sort(right)
+    return merge(result_left, result_right)
+
+
+my_test_list = [4, 2, 7, 9, 1, 3, 11, 5, 6, 14]
+print(my_test_list)
+print("result of merge sort with insertion sort: ", merge_sort_with_insertion_sort(my_test_list))
+
+
+def quick_sort(values):
+    if len(values) <= 1:
+        return values
+    pivot = values[0]
+    below_or_equal = [val for val in values[1:] if val <= pivot]
+    aboves = [val for val in values[1:] if val > pivot]
+    sorted_lower_parts = quick_sort(below_or_equal)
+    sorted_uppers_part = quick_sort(aboves)
+    return sorted_lower_parts + [pivot] + sorted_uppers_part
+
+
+my_test_list = [4, 2, 7, 9, 1, 3, 11, 5, 6, 14]
+print(my_test_list)
+print("result of merge sort with insertion sort: ", quick_sort(my_test_list))
+
+
+def contains_all(values, search_values):
+    pass
+
+
+values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+search_values = [7, 2]
+
+print('values: ', values)
+print('using sorted on the values list', sorted(values))
+print('values: ', values)

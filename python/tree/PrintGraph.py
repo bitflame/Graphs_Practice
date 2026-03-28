@@ -155,13 +155,28 @@ def create_tree():
     _b = BinaryTreeNode('B')
     _a = BinaryTreeNode('A')
     _c = BinaryTreeNode('C')
+    _x = BinaryTreeNode('X')
+    _y = BinaryTreeNode('Y')
+    _p = BinaryTreeNode('P')
+    _q = BinaryTreeNode('Q')
+    _r = BinaryTreeNode('R')
+    _s = BinaryTreeNode('S')
+    _t = BinaryTreeNode('T')
+    _u = BinaryTreeNode('U')
     _f.left = _d
     _f.right = _h
     _d.left = _b
+    _d.right = _y
     _h.right = _i
+    _h.left = _x
     _b.left = _a
     _b.right = _c
-    _d.left = _b
+    _x.left = _r
+    _x.right = _s
+    _i.left = _t
+    _i.right = _u
+    _y.left = _p
+    _y.right = _q
     return _f
 
 
