@@ -128,9 +128,26 @@ def binary_search(values, target, low, hi=None):
 search_values = [7, 2]
 
 
+# this needs the array to be sorted
 def contains_all(values, search_values):
     for val in search_values:
         if binary_search(values, val, 0) == -1:
+            return False
+    return True
+
+
+# this works in arrays not sorted
+def better_contains(values, search_values):
+    for val in search_values:
+        if val not in values:
+            return False
+    return True
+
+
+def contains_all_via_set(values, search_values):
+    set_values = set(values)
+    for search_val in search_values:
+        if search_val not in set_values:
             return False
     return True
 
@@ -160,3 +177,32 @@ false_search_values = [5, 11]
 print('expected outcome: False, actual outcome: ', contains_all(values, false_search_values))
 false_search_values = [0, 9, 5, 11, 0]
 print('expected outcome: False, actual outcome: ', contains_all(values, false_search_values))
+#################################Testing better_contains()#####################################
+print('--------------------------Testing better_contains()-----------------------------------')
+print('expected outcome: True, actual outcome: ', better_contains(values, search_values))
+false_search_values = [5, 11]
+print('expected outcome: False, actual outcome: ', better_contains(values, false_search_values))
+false_search_values = [0, 9, 5, 11, 0]
+print('expected outcome: False, actual outcome: ', better_contains(values, false_search_values))
+#################################Testing contains_all_via_set()#####################################
+print('--------------------------Testing contains_all_via_set()-----------------------------------')
+print('expected outcome: True, actual outcome: ', contains_all_via_set(values, search_values))
+false_search_values = [5, 11]
+print('expected outcome: False, actual outcome: ', contains_all_via_set(values, false_search_values))
+false_search_values = [0, 9, 5, 11, 0]
+print('expected outcome: False, actual outcome: ', contains_all_via_set(values, false_search_values))
+
+
+def yet_another_contains_all(values, search_values):
+    values_set = set(values)
+    all(val in values_set for val in search_values)
+    # return all(val in search_values for val in values_set)
+
+
+#################################Testing yet_another_contains_all()#####################################
+print('--------------------------Testing yet_another_contains_all()-----------------------------------')
+print('expected outcome: True, actual outcome: ', yet_another_contains_all(values, search_values))
+false_search_values = [5, 11]
+print('expected outcome: False, actual outcome: ', yet_another_contains_all(values, false_search_values))
+false_search_values = [0, 9, 5, 11, 0]
+print('expected outcome: False, actual outcome: ', yet_another_contains_all(values, false_search_values))
