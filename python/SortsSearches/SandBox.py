@@ -112,7 +112,7 @@ print("result of merge sort with insertion sort: ", quick_sort(my_test_list))
 
 def binary_search(values, target, low, hi=None):
     if hi is None:
-        hi = len(values)-1
+        hi = len(values) - 1
     if low > hi:
         return -1
     mid = (hi + low) // 2
@@ -125,8 +125,14 @@ def binary_search(values, target, low, hi=None):
     return None
 
 
+search_values = [7, 2]
+
+
 def contains_all(values, search_values):
-    pass
+    for val in search_values:
+        if binary_search(values, val, 0) == -1:
+            return False
+    return True
 
 
 values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -143,8 +149,14 @@ print('looking for 7 in array of 0 to 10 expected value: 7, actual value: ', bin
 print('looking for 8 in array of 0 to 10 expected value: 8, actual value: ', binary_search(values, 8, 0))
 print('looking for 9 in array of 0 to 10 expected value: 9, actual value: ', binary_search(values, 9, 0))
 
-search_values = [7, 2]
-
 print('values: ', values)
 print('using sorted on the values list', sorted(values))
 print('values: ', values)
+
+#################################Testing contains_all()#####################################
+print('--------------------------Testing contains_all()-----------------------------------')
+print('expected outcome: True, actual outcome: ', contains_all(values, search_values))
+false_search_values = [5, 11]
+print('expected outcome: False, actual outcome: ', contains_all(values, false_search_values))
+false_search_values = [0, 9, 5, 11, 0]
+print('expected outcome: False, actual outcome: ', contains_all(values, false_search_values))
