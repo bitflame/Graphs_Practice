@@ -195,7 +195,7 @@ print('expected outcome: False, actual outcome: ', contains_all_via_set(values, 
 
 def yet_another_contains_all(values, search_values):
     values_set = set(values)
-    all(val in values_set for val in search_values)
+    return all(val in values_set for val in search_values)
     # return all(val in search_values for val in values_set)
 
 
@@ -206,3 +206,34 @@ false_search_values = [5, 11]
 print('expected outcome: False, actual outcome: ', yet_another_contains_all(values, false_search_values))
 false_search_values = [0, 9, 5, 11, 0]
 print('expected outcome: False, actual outcome: ', yet_another_contains_all(values, false_search_values))
+#################################Testing partition2()#####################################
+print('--------------------------Testing partition2()-----------------------------------')
+
+
+def partition2(text):
+    result = str.join("", partition2_helper(text[0], 1, len(text) - 1, list(text)))
+    return result
+
+
+def partition2_helper(pivot, head_idx, end_idx, text):
+    if head_idx >= end_idx:
+        return text
+    if text[head_idx] == pivot:
+        head_idx += 1
+    elif text[head_idx] != text[end_idx]:
+        tmp = text[head_idx]
+        text[head_idx] = text[end_idx]
+        text[end_idx] = tmp
+    if text[end_idx] != pivot:
+        end_idx -= 1
+    elif text[head_idx] != text[end_idx]:
+        tmp = text[head_idx]
+        text[head_idx] = text[end_idx]
+        text[end_idx] = tmp
+        head_idx += 1
+        end_idx += 1
+    return partition2_helper(pivot, head_idx, end_idx, text)
+
+
+text = "ABAABBBAAABBBA"
+print(partition2(text))
