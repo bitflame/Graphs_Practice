@@ -314,3 +314,25 @@ values = 'CCBA'
 print('Test 6 - input: CCBA, expected output: ABCC, actual output: ', my_method(values))
 values = "ABACCBBCAACCBBA"
 print('Test 7 - input: ABACCBBCAACCBBA, expected output: AAAAABBBBBCCCCC, actual output: ', my_method(values))
+
+
+def another_binary_search(values, target):
+    return another_binary_search_helper(values, target, 0, len(values) - 1)
+
+
+def another_binary_search_helper(values, target, lo, hi):
+    if lo > hi :
+        return -1
+    mid = (lo+hi)//2
+    if values[mid]==target:
+        return values[mid]
+    elif values[mid]>target:
+        return another_binary_search(values,target,lo,mid-1)
+    elif values[mid]<target:
+        return another_binary_search(values,target,mid+1, hi)
+    return None
+values = [1,2,3,4,5,6,7,8,9]
+target = 5
+print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ',another_binary_search(values,5))
+target = 14
+print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ',another_binary_search(values,14))
