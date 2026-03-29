@@ -321,18 +321,20 @@ def another_binary_search(values, target):
 
 
 def another_binary_search_helper(values, target, lo, hi):
-    if lo > hi :
+    if lo > hi:
         return -1
-    mid = (lo+hi)//2
-    if values[mid]==target:
+    mid = (lo + hi) // 2
+    if values[mid] == target:
         return values[mid]
-    elif values[mid]>target:
-        return another_binary_search(values,target,lo,mid-1)
-    elif values[mid]<target:
-        return another_binary_search(values,target,mid+1, hi)
+    elif values[mid] > target:
+        return another_binary_search_helper(values, target, lo, mid - 1)
+    elif values[mid] < target:
+        return another_binary_search_helper(values, target, mid + 1, hi)
     return None
-values = [1,2,3,4,5,6,7,8,9]
+
+
+values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 target = 5
-print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ',another_binary_search(values,5))
+print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ', another_binary_search(values, 5))
 target = 14
-print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ',another_binary_search(values,14))
+print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', another_binary_search(values, 14))
