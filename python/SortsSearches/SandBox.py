@@ -340,3 +340,23 @@ target = 14
 print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', another_binary_search(values, 14))
 target = 0
 print('Test 3 - input: values:1,2,3,4,5,6,7,8,9, target: 0, output:  ', another_binary_search(values, 0))
+
+
+# Michael Inden does it this way...
+def bin_search(sorted_values, search_for):
+    mid_pos = len(sorted_values) // 2
+    if search_for == sorted_values[mid_pos]:
+        return True
+    if len(sorted_values) > 1:
+        if sorted_values[mid_pos] > search_for:
+            lower_helf = sorted_values[0:mid_pos]
+            return bin_search(lower_helf, search_for)
+        elif sorted_values[mid_pos] < search_for:
+            upper_half = sorted_values[mid_pos+1:len(sorted_values)]
+            return bin_search(upper_half, search_for)
+    return False
+
+
+print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ', bin_search(values, 5))
+print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 0, output:  ', bin_search(values, 0))
+print('Test 3 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', bin_search(values, 14))
