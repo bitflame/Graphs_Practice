@@ -352,7 +352,7 @@ def bin_search(sorted_values, search_for):
             lower_helf = sorted_values[0:mid_pos]
             return bin_search(lower_helf, search_for)
         elif sorted_values[mid_pos] < search_for:
-            upper_half = sorted_values[mid_pos+1:len(sorted_values)]
+            upper_half = sorted_values[mid_pos + 1:len(sorted_values)]
             return bin_search(upper_half, search_for)
     return False
 
