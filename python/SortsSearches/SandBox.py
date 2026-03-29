@@ -308,3 +308,9 @@ values = 'ABA'
 print('Test 3 - input: ABA, expected output: AAB, actual output: ', my_method(values))
 values = 'ACB'
 print('Test 4 - input: ACB, expected output: ABC, actual output: ', my_method(values))
+values = 'CBA'
+print('Test 5 - input: CBA, expected output: ABC, actual output: ', my_method(values))
+values = 'CCBA'
+print('Test 6 - input: CCBA, expected output: ABCC, actual output: ', my_method(values))
+values = "ABACCBBCAACCBBA"
+print('Test 7 - input: ABACCBBCAACCBBA, expected output: AAAAABBBBBCCCCC, actual output: ', my_method(values))
