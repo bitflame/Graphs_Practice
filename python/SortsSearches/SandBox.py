@@ -231,9 +231,46 @@ def partition2_helper(pivot, head_idx, end_idx, text):
         text[head_idx] = text[end_idx]
         text[end_idx] = tmp
         head_idx += 1
-        end_idx += 1
+        end_idx -= 1
     return partition2_helper(pivot, head_idx, end_idx, text)
 
 
 text = "ABAABBBAAABBBA"
 print(partition2(text))
+
+def book_method(text):
+    low = 0
+    high = len(text) -1
+    while low <= high:
+        if text[low]=='A':
+            low+=1
+        else:
+            swap_positions(text, low, high)
+            high-=1
+    return "".join(text)
+def swap_positions(list, pos1, pos2):
+    list[pos1], list[pos2] = list[pos2], list[pos1]
+
+text = "ABAABBBAAABBBA"
+# print(book_method(text))
+############################Testing partition_three_chars()###############################
+print('---------------------Testing partition_three_chars()-----------------------------')
+# assuming the pivot value is know...
+def part_three(text):
+    text_list = list(text)
+    low = 0
+    mid = 0
+    high = len(text)-1
+    while mid <= high:
+        if text_list[mid]=='A':
+            swap_positions(text_list,low,mid)
+            mid+=1
+            low+=1
+        elif text_list[mid]=='B':
+            mid+=1
+        else:
+            swap_positions(text_list,mid,high)
+            high-=1
+    return str.join("",text_list)
+
+print(part_three("ABACCBBCAACCBBA"))
