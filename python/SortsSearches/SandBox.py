@@ -338,3 +338,5 @@ target = 5
 print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ', another_binary_search(values, 5))
 target = 14
 print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', another_binary_search(values, 14))
+target = 0
+print('Test 3 - input: values:1,2,3,4,5,6,7,8,9, target: 0, output:  ', another_binary_search(values, 0))
