@@ -238,39 +238,73 @@ def partition2_helper(pivot, head_idx, end_idx, text):
 text = "ABAABBBAAABBBA"
 print(partition2(text))
 
+
 def book_method(text):
     low = 0
-    high = len(text) -1
+    high = len(text) - 1
     while low <= high:
-        if text[low]=='A':
-            low+=1
+        if text[low] == 'A':
+            low += 1
         else:
             swap_positions(text, low, high)
-            high-=1
+            high -= 1
     return "".join(text)
+
+
 def swap_positions(list, pos1, pos2):
     list[pos1], list[pos2] = list[pos2], list[pos1]
+
 
 text = "ABAABBBAAABBBA"
 # print(book_method(text))
 ############################Testing partition_three_chars()###############################
 print('---------------------Testing partition_three_chars()-----------------------------')
+
+
 # assuming the pivot value is know...
 def part_three(text):
     text_list = list(text)
     low = 0
     mid = 0
-    high = len(text)-1
+    high = len(text) - 1
     while mid <= high:
-        if text_list[mid]=='A':
-            swap_positions(text_list,low,mid)
-            mid+=1
-            low+=1
-        elif text_list[mid]=='B':
-            mid+=1
+        if text_list[mid] == 'A':
+            swap_positions(text_list, low, mid)
+            mid += 1
+            low += 1
+        elif text_list[mid] == 'B':
+            mid += 1
         else:
-            swap_positions(text_list,mid,high)
-            high-=1
-    return str.join("",text_list)
+            swap_positions(text_list, mid, high)
+            high -= 1
+    return str.join("", text_list)
+
 
 print(part_three("ABACCBBCAACCBBA"))
+
+
+def my_method(values):
+    start, mid, end = 0, 0, len(values) - 1
+    values_list = list(values)
+    while mid < end:
+        if values_list[mid] == 'A':
+            swap_positions(values_list, start, mid)
+            start += 1
+            mid += 1
+        elif values_list[mid] == 'B':
+            mid += 1
+
+        else:  # values[mid] must be a 'C'
+            swap_positions(values_list, mid, end)
+            end -= 1
+    return str.join("", values_list)
+
+
+values = 'ABCABCABCABC'
+print('Test 1 - input: ABCABCABCABC, expected output: AAAABBBBCCCC, actual output: ', my_method(values))
+values = 'AAB'
+print('Test 2 - input: AAB, expected output: AAB, actual output: ', my_method(values))
+values = 'ABA'
+print('Test 3 - input: ABA, expected output: AAB, actual output: ', my_method(values))
+values = 'ACB'
+print('Test 4 - input: ACB, expected output: ABC, actual output: ', my_method(values))
