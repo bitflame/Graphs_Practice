@@ -315,6 +315,8 @@ print('Test 6 - input: CCBA, expected output: ABCC, actual output: ', my_method(
 values = "ABACCBBCAACCBBA"
 print('Test 7 - input: ABACCBBCAACCBBA, expected output: AAAAABBBBBCCCCC, actual output: ', my_method(values))
 
+print('---------------------BinarySearch Recursive -----------------------------')
+
 
 def another_binary_search(values, target):
     return another_binary_search_helper(values, target, 0, len(values) - 1)
@@ -340,8 +342,18 @@ target = 14
 print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', another_binary_search(values, 14))
 target = 0
 print('Test 3 - input: values:1,2,3,4,5,6,7,8,9, target: 0, output:  ', another_binary_search(values, 0))
+print('Test 4 - input: values:1,2,3,4,5,6,7,8,9, target: 1, output:  ', another_binary_search(values, 1))
+print('Test 5 - input: values:1,2,3,4,5,6,7,8,9, target: 2, output:  ', another_binary_search(values, 2))
+print('Test 6 - input: values:1,2,3,4,5,6,7,8,9, target: 3, output:  ', another_binary_search(values, 3))
+print('Test 7 - input: values:1,2,3,4,5,6,7,8,9, target: 4, output:  ', another_binary_search(values, 4))
+print('Test 8 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ', another_binary_search(values, 5))
+print('Test 9 - input: values:1,2,3,4,5,6,7,8,9, target: 6, output:  ', another_binary_search(values, 6))
+print('Test 10 - input: values:1,2,3,4,5,6,7,8,9, target: 7, output:  ', another_binary_search(values, 7))
+print('Test 11 - input: values:1,2,3,4,5,6,7,8,9, target: 8, output:  ', another_binary_search(values, 8))
+print('Test 12 - input: values:1,2,3,4,5,6,7,8,9, target: 9, output:  ', another_binary_search(values, 9))
+print('Test 13 - input: values:1,2,3,4,5,6,7,8,9, target: 10, output:  ', another_binary_search(values, 10))
 
-
+print('---------------------BinarySearch Recursive Returns True/False-----------------------------')
 # Michael Inden does it this way...
 def bin_search(sorted_values, search_for):
     mid_pos = len(sorted_values) // 2
@@ -361,11 +373,12 @@ print('Test 1 - input: values:1,2,3,4,5,6,7,8,9, target: 5, output:  ', bin_sear
 print('Test 2 - input: values:1,2,3,4,5,6,7,8,9, target: 0, output:  ', bin_search(values, 0))
 print('Test 3 - input: values:1,2,3,4,5,6,7,8,9, target: 14, output:  ', bin_search(values, 14))
 
-
 ############################BinarySearch Iterative###############################
 print('---------------------BinarySearch Iterative-----------------------------')
+
+
 def bin_search_iter(values, target):
-    lo, mid, hi = 0, 0, len(values)-1
+    lo, mid, hi = 0, 0, len(values) - 1
     while lo <= hi:
         mid = (lo + hi) // 2
         if values[mid] == target:
