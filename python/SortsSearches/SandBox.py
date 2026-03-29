@@ -354,6 +354,8 @@ print('Test 12 - input: values:1,2,3,4,5,6,7,8,9, target: 9, output:  ', another
 print('Test 13 - input: values:1,2,3,4,5,6,7,8,9, target: 10, output:  ', another_binary_search(values, 10))
 
 print('---------------------BinarySearch Recursive Returns True/False-----------------------------')
+
+
 # Michael Inden does it this way...
 def bin_search(sorted_values, search_for):
     mid_pos = len(sorted_values) // 2
@@ -403,3 +405,30 @@ print('Test 10 - input: values:1,2,3,4,5,6,7,8,9, target: 7, output:  ', bin_sea
 print('Test 11 - input: values:1,2,3,4,5,6,7,8,9, target: 8, output:  ', bin_search_iter(values, 8))
 print('Test 12 - input: values:1,2,3,4,5,6,7,8,9, target: 9, output:  ', bin_search_iter(values, 9))
 print('Test 13 - input: values:1,2,3,4,5,6,7,8,9, target: 10, output:  ', bin_search_iter(values, 10))
+################################Insertion Sort##########################################
+print('--------------------------Insertion Sort---------------------------------------')
+
+
+def insertion_sort(values):
+    curr = 0
+    while curr < len(values):
+        while curr > 0 and values[curr - 1] > values[curr]:
+            tmp = values[curr]
+            tmp_cntr = curr
+            while tmp_cntr > 0 and values[tmp_cntr - 1] > tmp:
+                values[tmp_cntr] = values[tmp_cntr - 1]
+                tmp_cntr -= 1
+            values[tmp_cntr] = tmp
+        curr += 1
+    return values
+
+
+values = [7, 2]
+print(insertion_sort(values))
+values = [2, 7]
+print(insertion_sort(values))
+values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
+print(insertion_sort(values))
+values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
+print(insertion_sort(values))
+
