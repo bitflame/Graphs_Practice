@@ -286,7 +286,7 @@ print(part_three("ABACCBBCAACCBBA"))
 def my_method(values):
     start, mid, end = 0, 0, len(values) - 1
     values_list = list(values)
-    while mid < end:
+    while mid <= end:
         if values_list[mid] == 'A':
             swap_positions(values_list, start, mid)
             start += 1
