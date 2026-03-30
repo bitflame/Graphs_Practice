@@ -431,13 +431,45 @@ values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
 print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
 values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
 print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
-values = [7,2,5,1,6,8,9,4,3]
+values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
 print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
+
+
 def ins_sort_book(values):
-    for i in range(1,len(values)):
+    for i in range(1, len(values)):
         # check if the current element is smaller than predecessor
         current_idx = i
-        while values[current_idx] > 0 and values[current_idx]<values[current_idx-1]:
-            swap_positions(values,current_idx-1, current_idx)
-            current_idx-=1
-################################Insertion Sort##########################################
+        while values[current_idx] > 0 and values[current_idx] < values[current_idx - 1]:
+            swap_positions(values, current_idx - 1, current_idx)
+            current_idx -= 1
+
+
+################################Selection Sort##########################################
+def my_selection(values):
+    curr = 0
+    sorted = len(values) - 1
+    max_val = 0
+    while sorted > 0:
+        while curr < sorted:
+            if values[curr] > max_val:
+                max_val = values[curr]
+            curr += 1
+        while values[sorted] > max_val:
+            sorted -= 1
+        max_val, values[sorted] = values[sorted], max_val
+        sorted -= 1
+        max_val = 0
+        curr = 0
+    return values
+
+
+values = [7, 2]
+print('Test 1 - Expecting 2,7: ', my_selection(values))
+values = [2, 7]
+print('Test 2 - Expecting 2,7: ', my_selection(values))
+values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
+print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', my_selection(values))
+values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
+print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', my_selection(values))
+values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
+print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', my_selection(values))
