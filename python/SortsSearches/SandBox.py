@@ -431,3 +431,12 @@ values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
 print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
 values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
 print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
+values = [7,2,5,1,6,8,9,4,3]
+print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
+def ins_sort_book(values):
+    for i in range(1,len(values)):
+        # check if the current element is smaller than predecessor
+        current_idx = i
+        while values[current_idx] > 0 and values[current_idx]<values[current_idx-1]:
+            swap_positions(values,current_idx-1, current_idx)
+            current_idx-=1
