@@ -412,7 +412,7 @@ print('--------------------------Insertion Sort---------------------------------
 def insertion_sort(values):
     curr = 0
     while curr < len(values):
-        while curr > 0 and values[curr - 1] > values[curr]:
+        if curr > 0 and values[curr - 1] > values[curr]:
             tmp = values[curr]
             tmp_cntr = curr
             while tmp_cntr > 0 and values[tmp_cntr - 1] > tmp:
@@ -424,11 +424,10 @@ def insertion_sort(values):
 
 
 values = [7, 2]
-print(insertion_sort(values))
+print('Test 1 - Expecting 2,7: ', insertion_sort(values))
 values = [2, 7]
-print(insertion_sort(values))
+print('Test 2 - Expecting 2,7: ', insertion_sort(values))
 values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
-print(insertion_sort(values))
+print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
 values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
-print(insertion_sort(values))
-
+print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', insertion_sort(values))
