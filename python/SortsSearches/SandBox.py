@@ -449,17 +449,23 @@ def my_selection(values):
     curr = 0
     sorted = len(values) - 1
     max_val = 0
+    max_val_idx = 0
+    found_max_value = False
     while sorted > 0:
         while curr < sorted:
             if values[curr] > max_val:
                 max_val = values[curr]
+                max_val_idx = curr
+                found_max_value = True
             curr += 1
         while values[sorted] > max_val:
             sorted -= 1
-        max_val, values[sorted] = values[sorted], max_val
+        if found_max_value:
+            values[max_val_idx], values[sorted] = values[sorted], values[max_val_idx]
         sorted -= 1
         max_val = 0
         curr = 0
+        false_search_values = False
     return values
 
 
