@@ -553,17 +553,32 @@ print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', values)
 print("-------------------------Bucket Sort----------------------------------------")
 def my_bucket_sort(values):
     data_dictionary = {}
+    result =[]
     for val in values:
         if  val not in data_dictionary.keys():
             data_dictionary[val] = 1
         else:
             data_dictionary[val] = data_dictionary[val] + 1
     for key in sorted(data_dictionary.keys()):
-        print(key, data_dictionary[key])
-    return None
+        for i in range(data_dictionary[key]):
+            result.append(key)
+    return result
 
 ages = [10, 50, 22, 7, 42, 111, 50, 7]
-my_bucket_sort(ages)
+print(my_bucket_sort(ages))
+
+# AI generated version
+def my_bucket_sort(values):
+    freq = {}
+
+    for v in values:
+        freq[v] = freq.get(v, 0) + 1
+
+    result = []
+    for key in sorted(freq):
+        result.extend([key] * freq[key])
+
+    return result
 
 def bucket_sort(values, max_value):
     buckets = [0]*max_value
