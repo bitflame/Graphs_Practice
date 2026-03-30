@@ -510,7 +510,7 @@ def my_quick_sort_helper(values, left, right):
     if left >= right:
         return
     partition_index = partition(values, left, right)
-    my_quick_sort_helper(values, 0, partition_index - 1)
+    my_quick_sort_helper(values, left, partition_index - 1)
     my_quick_sort_helper(values, partition_index + 1, right)
 
 
