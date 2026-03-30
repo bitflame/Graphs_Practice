@@ -1,3 +1,6 @@
+from numpy.ma.core import maximum_fill_value
+
+
 def insertion_sort(values):
     for current_pos in range(1, len(values)):
         current_val = values[current_pos]
@@ -545,3 +548,40 @@ print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', values)
 values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
 my_quick_sort(values)
 print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', values)
+
+################################Bucket Sort##########################################
+print("-------------------------Bucket Sort----------------------------------------")
+def my_bucket_sort(values):
+    data_dictionary = {}
+    for val in values:
+        if  val not in data_dictionary.keys():
+            data_dictionary[val] = 1
+        else:
+            data_dictionary[val] = data_dictionary[val] + 1
+    for key in sorted(data_dictionary.keys()):
+        print(key, data_dictionary[key])
+    return None
+
+ages = [10, 50, 22, 7, 42, 111, 50, 7]
+my_bucket_sort(ages)
+
+def bucket_sort(values, max_value):
+    buckets = [0]*max_value
+    fill_bucket(values, buckets)
+    results = [0]*len(values)
+    return fill_result_from_buckets(buckets,results)
+
+def fill_bucket(values, buckets):
+    for val in values:
+        buckets[val]+=1
+    return buckets
+
+def fill_result_from_buckets(bucket, results):
+    index = 0
+    for i,val in enumerate(bucket):
+        for j in range(val):
+            results[index]=i
+            index+=1
+    return results
+
+print(bucket_sort(ages,150))
