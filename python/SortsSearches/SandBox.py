@@ -451,7 +451,7 @@ def my_selection(values):
         max_val_idx = 0
         curr = 1
         while curr <= end:
-            if values[curr] > values[[max_val_idx]]:
+            if values[curr] > values[max_val_idx]:
                 max_val_idx = curr
             curr += 1
         values[max_val_idx], values[end] = values[end], values[max_val_idx]
@@ -497,3 +497,51 @@ values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
 print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', book_selection_sort(values))
 values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
 print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', book_selection_sort(values))
+
+################################Quick Sort##########################################
+print("-------------------------Quick Sort----------------------------------------")
+
+
+def my_quick_sort(values):
+    return my_quick_sort_helper(values, 0, len(values) - 1)
+
+
+def my_quick_sort_helper(values, left, right):
+    if left >= right:
+        return
+    partition_index = partition(values, left, right)
+    my_quick_sort_helper(values, 0, partition_index - 1)
+    my_quick_sort_helper(values, partition_index + 1, right)
+
+
+def partition(values, left, right):
+    pivot = values[0]
+    left_idx = left + 1
+    right_idx = right
+    while left_idx < right_idx:
+        while left_idx < right_idx and values[left_idx] < pivot:
+            left_idx += 1
+        while right_idx > left_idx and values[right_idx] > pivot:
+            right_idx -= 1
+        if left_idx < right_idx:
+            swap_positions(values, left_idx, right_idx)
+    if values[right_idx] < pivot:
+        swap_positions(values, left, right_idx)
+    return right_idx
+
+
+values = [7, 2]
+my_quick_sort(values)
+print('Test 1 - Expecting 2,7: ', values)
+values = [2, 7]
+my_quick_sort(values)
+print('Test 2 - Expecting 2,7: ', values)
+values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
+my_quick_sort(values)
+print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', values)
+values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
+my_quick_sort(values)
+print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', values)
+values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
+my_quick_sort(values)
+print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', values)
