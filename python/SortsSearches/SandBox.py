@@ -446,26 +446,16 @@ def ins_sort_book(values):
 
 ################################Selection Sort##########################################
 def my_selection(values):
-    curr = 0
-    sorted = len(values) - 1
-    max_val = 0
-    max_val_idx = 0
-    found_max_value = False
-    while sorted > 0:
-        while curr < sorted:
-            if values[curr] > max_val:
-                max_val = values[curr]
+    end = len(values) - 1
+    while end > 0:
+        max_val_idx = 0
+        curr = 1
+        while curr <= end:
+            if values[curr] > values[[max_val_idx]]:
                 max_val_idx = curr
-                found_max_value = True
             curr += 1
-        while values[sorted] > max_val:
-            sorted -= 1
-        if found_max_value:
-            values[max_val_idx], values[sorted] = values[sorted], values[max_val_idx]
-        sorted -= 1
-        max_val = 0
-        curr = 0
-        false_search_values = False
+        values[max_val_idx], values[end] = values[end], values[max_val_idx]
+        end -= 1
     return values
 
 
@@ -479,3 +469,31 @@ values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
 print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', my_selection(values))
 values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
 print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', my_selection(values))
+
+
+def book_selection_sort(value):
+    for i in range(len(values) - 1, 0, -1):
+        max_pos = find_max_pos(values, 0, i + 1)
+        swap_positions(values, max_pos, i)
+    return values
+
+
+def find_max_pos(values, start_pos, end_pos):
+    max_pos = start_pos
+    for i in range(start_pos + 1, end_pos):
+        if values[i] > values[max_pos]:
+            max_pos = i
+
+    return max_pos
+
+
+values = [7, 2]
+print('Test 1 - Expecting 2,7: ', book_selection_sort(values))
+values = [2, 7]
+print('Test 2 - Expecting 2,7: ', book_selection_sort(values))
+values = [7, 2, 5, 1, 6, 8, 9, 4, 2]
+print('Test 3 - Expecting 1,2,4,5,6,7,8,9: ', book_selection_sort(values))
+values = [2, 7, 5, 1, 6, 8, 9, 4, 2]
+print('Test 4 - Expecting 1,2,4,5,6,7,8,9: ', book_selection_sort(values))
+values = [7, 2, 5, 1, 6, 8, 9, 4, 3]
+print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', book_selection_sort(values))
