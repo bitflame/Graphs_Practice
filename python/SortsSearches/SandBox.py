@@ -553,11 +553,13 @@ print('Test 5 - Expecting 1,2,4,5,6,7,8,9: ', values)
 
 ################################Bucket Sort##########################################
 print("-------------------------Bucket Sort----------------------------------------")
+
+
 def my_bucket_sort(values):
     data_dictionary = {}
-    result =[]
+    result = []
     for val in values:
-        if  val not in data_dictionary.keys():
+        if val not in data_dictionary.keys():
             data_dictionary[val] = 1
         else:
             data_dictionary[val] = data_dictionary[val] + 1
@@ -566,8 +568,10 @@ def my_bucket_sort(values):
             result.append(key)
     return result
 
+
 ages = [10, 50, 22, 7, 42, 111, 50, 7]
 print(my_bucket_sort(ages))
+
 
 # AI generated version
 def my_bucket_sort(values):
@@ -582,56 +586,71 @@ def my_bucket_sort(values):
 
     return result
 
+
 def bucket_sort(values, max_value):
-    buckets = [0]*max_value
+    buckets = [0] * max_value
     fill_bucket(values, buckets)
-    results = [0]*len(values)
-    return fill_result_from_buckets(buckets,results)
+    results = [0] * len(values)
+    return fill_result_from_buckets(buckets, results)
+
 
 def fill_bucket(values, buckets):
     for val in values:
-        buckets[val]+=1
+        buckets[val] += 1
     return buckets
+
 
 def fill_result_from_buckets(bucket, results):
     index = 0
-    for i,val in enumerate(bucket):
+    for i, val in enumerate(bucket):
         for j in range(val):
-            results[index]=i
-            index+=1
+            results[index] = i
+            index += 1
     return results
 
-print(bucket_sort(ages,150))
 
+print(bucket_sort(ages, 150))
+
+
+#########################################Rotated BinarySearch###################################################
 def find_flank_pos(values):
-    return find_flank_pos_in_range(values, 0,len(values)-1)
+    return find_flank_pos_in_range(values, 0, len(values) - 1)
+
+
 def find_flank_pos_in_range(values, left, right):
-    mid_pos = left + (right-left)//2
+    mid_pos = left + (right - left) // 2
     mid_value = values[mid_pos]
-    if values[left]<values[right]:
-        return 0 # the list is not rotated
-    prev_index = mid_pos-1
+    if values[left] < values[right]:
+        return 0  # the list is not rotated
+    prev_index = mid_pos - 1
     if prev_index < 0:
-        prev_index = len(values)-1
-    if values[prev_index]>values[mid_pos]: return mid_pos
-    if values[left]>mid_value:
-        return find_flank_pos_in_range(values,left,mid_pos+1)
-    if values[right]<values[mid_pos]:
-        return find_flank_pos_in_range(values,mid_pos+1,right)
+        prev_index = len(values) - 1
+    if values[prev_index] > values[mid_pos]: return mid_pos
+    if values[left] > mid_value:
+        return find_flank_pos_in_range(values, left, mid_pos + 1)
+    if values[right] < values[mid_pos]:
+        return find_flank_pos_in_range(values, mid_pos + 1, right)
     raise Exception("should not reach here.")
+
+
 def min_value(values):
     flank_pos = find_flank_pos(values)
     return values[flank_pos]
+
+
 def max_value(values):
     flank_pos = find_flank_pos(values)
-    return values[(flank_pos-1)% len(values)]
+    return values[(flank_pos - 1) % len(values)]
 
-values= [25,33,47,1,2,3,5,11]
-print('Expected value: 3, actual: ',find_flank_pos(values))
-values = [6,7,1,2,3,4,5]
-print('Expected value: 2, actual: ',find_flank_pos(values))
-values = [1,2,3,4,5,6,7]
-print('Expected value: 0, actual: ',find_flank_pos(values))
+
+values = [25, 33, 47, 1, 2, 3, 5, 11]
+print('Expected value: 3, actual: ', find_flank_pos(values))
+values = [6, 7, 1, 2, 3, 4, 5]
+print('Expected value: 2, actual: ', find_flank_pos(values))
+values = [1, 2, 3, 4, 5, 6, 7]
+print('Expected value: 0, actual: ', find_flank_pos(values))
+
+
 # The following is the AI generated iterative approach
 def find_pivot(nums):
     left, right = 0, len(nums) - 1
@@ -661,3 +680,31 @@ def find_pivot(nums):
 
     return 0  # fallback, though we should never reach here
 
+
+# here is an AI provided version that checks both mid and mid+1 that is different from book
+# AI says book's way is not pure binary search
+def find_pivot_recursive(nums):
+    def helper(left, right):
+        # If the array segment is already sorted
+        if nums[left] < nums[right]:
+            return left
+
+        mid = left + (right - left) // 2
+
+        # Check if mid is pivot
+        if mid > 0 and nums[mid] < nums[mid - 1]:
+            return mid
+
+        # Check if mid+1 is pivot
+        if mid < len(nums) - 1 and nums[mid] > nums[mid + 1]:
+            return mid + 1
+
+        # Decide which half to recurse into
+        if nums[mid] >= nums[left]:
+            # Pivot must be to the right
+            return helper(mid + 1, right)
+        else:
+            # Pivot must be to the left
+            return helper(left, mid - 1)
+
+    return helper(0, len(nums) - 1)
