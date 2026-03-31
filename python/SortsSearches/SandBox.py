@@ -1,3 +1,5 @@
+from tokenize import endpats
+
 from numpy.ma.core import maximum_fill_value
 
 from org.example.strings import mid_chars
@@ -708,3 +710,20 @@ def find_pivot_recursive(nums):
             return helper(left, mid - 1)
 
     return helper(0, len(nums) - 1)
+
+def binary_search_rotated(values, search_for):
+    flank_pos = find_flank_pos(values)
+    return binary_search_rotated_in_range(values, search_for, flank_pos, flank_pos-1 + len(values))
+
+def binary_search_rotated_in_range(values, search_for,left , right):
+    
+    mid = (left + (right-left))//2
+
+    pass
+
+values = [25, 33, 47, 1, 2, 3, 5, 11]
+print('Expected value: 3, actual: ', binary_search_rotated(values,3))
+values = [6, 7, 1, 2, 3, 4, 5]
+print('Expected value: 2, actual: ', binary_search_rotated(values,6))
+values = [1, 2, 3, 4, 5, 6, 7]
+print('Expected value: 0, actual: ', binary_search_rotated(values,7))
