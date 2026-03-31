@@ -1,5 +1,7 @@
 from numpy.ma.core import maximum_fill_value
 
+from org.example.strings import mid_chars
+
 
 def insertion_sort(values):
     for current_pos in range(1, len(values)):
@@ -600,3 +602,62 @@ def fill_result_from_buckets(bucket, results):
     return results
 
 print(bucket_sort(ages,150))
+
+def find_flank_pos(values):
+    return find_flank_pos_in_range(values, 0,len(values)-1)
+def find_flank_pos_in_range(values, left, right):
+    mid_pos = left + (right-left)//2
+    mid_value = values[mid_pos]
+    if values[left]<values[right]:
+        return 0 # the list is not rotated
+    prev_index = mid_pos-1
+    if prev_index < 0:
+        prev_index = len(values)-1
+    if values[prev_index]>values[mid_pos]: return mid_pos
+    if values[left]>mid_value:
+        return find_flank_pos_in_range(values,left,mid_pos+1)
+    if values[right]<values[mid_pos]:
+        return find_flank_pos_in_range(values,mid_pos+1,right)
+    raise Exception("should not reach here.")
+def min_value(values):
+    flank_pos = find_flank_pos(values)
+    return values[flank_pos]
+def max_value(values):
+    flank_pos = find_flank_pos(values)
+    return values[(flank_pos-1)% len(values)]
+
+values= [25,33,47,1,2,3,5,11]
+print('Expected value: 3, actual: ',find_flank_pos(values))
+values = [6,7,1,2,3,4,5]
+print('Expected value: 2, actual: ',find_flank_pos(values))
+values = [1,2,3,4,5,6,7]
+print('Expected value: 0, actual: ',find_flank_pos(values))
+# The following is the AI generated iterative approach
+def find_pivot(nums):
+    left, right = 0, len(nums) - 1
+
+    # If the array is not rotated
+    if nums[left] < nums[right]:
+        return 0
+
+    while left <= right:
+        mid = left + (right - left) // 2
+
+        # Check if mid is pivot
+        if mid > 0 and nums[mid] < nums[mid - 1]:
+            return mid
+
+        # Check if mid+1 is pivot
+        if mid < len(nums) - 1 and nums[mid] > nums[mid + 1]:
+            return mid + 1
+
+        # Decide which half to search
+        if nums[mid] >= nums[left]:
+            # Pivot must be to the right
+            left = mid + 1
+        else:
+            # Pivot must be to the left
+            right = mid - 1
+
+    return 0  # fallback, though we should never reach here
+
