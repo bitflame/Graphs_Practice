@@ -19,7 +19,7 @@ class Solution:
     def print_list(self, node: Optional[TreeNode]):
         if not node: 
             return
-        print(node.val, end='->')
+        print(node.val, end=' ->')
         self.print_list(node.left)
         # print_list(node.left)
         self.print_list(node.right)
