@@ -123,29 +123,29 @@ sample_tree = TreeNode(1, TreeNode(2), TreeNode(3))
 preorder = [1, 2, 3]
 inorder = [2, 1, 3]
 res = s.buildTree(preorder, inorder)
-print("Test 1  - Build Tree Preorder/Inorder expected:[1,2,3], actual: \n", s.print_tree(res))
-
+print("Test 1 - Build Tree Preorder/Inorder expected:[1,2,3], actual: ", end='')
+s.print_tree(res)
 
 sample_tree = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
 preorder = [3, 9, 20, 15, 7]
 inorder = [9, 3, 15, 20, 7]
 res = s.buildTree(preorder, inorder)
 # print("Test 2 - Build Tree Preorder/Inorder expected:[1,2,3]: actual:", s.print_tree(sample_tree))
-print("Test 2 - Build Tree Preorder/Inorder expected:[1,2,3]: actual:", s.print_tree(res))
-
+print("\nTest 2 - Build Tree Preorder/Inorder expected:[3, 9, 20, 15, 7] actual:",end="")
+s.print_tree(res)
 preorder = [8, 3, 1, 6, 4, 7, 10, 14, 13]
 inorder = [1, 3, 4, 6, 7, 8, 10, 13, 14]
 res = s.buildTree(preorder, inorder)
-print("Test 3  - Build Tree Preorder/Inorder expected:[8, 3, 1, 6, 4, 7, 10, 14, 13], actual: ", s.print_tree(res))
-
+print("\nTest 3 - Build Tree Preorder/Inorder expected:[8, 3, 1, 6, 4, 7, 10, 14, 13], actual: ", end="")
+s.print_tree(res)
 
 preorder = [-1]
 inorder = [-1]
 res = s.buildTree(preorder, inorder)
-print("Test 4  - Build Tree Preorder/Inorder expected:-1, actual: ", s.print_tree(res))
-
+print("\nTest 4 - Build Tree Preorder/Inorder expected:-1, actual: ", end="")
+s.print_tree(res)
 print(
-    "---------------------------------------Symmetric Tree Proble-------------------------------------------------------------")
+    "\n---------------------------------------Symmetric Tree Proble-------------------------------------------------------------")
 
 tee = TreeNode(1, TreeNode(2, TreeNode(3), TreeNode(4)), TreeNode(2, TreeNode(4), TreeNode(3)))
 res = s.isSymmetric(tee)
